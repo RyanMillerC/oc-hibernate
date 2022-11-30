@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# This is bad. This is a hack. Don't do this. Don't be like Ryan.
 
 INSTANCES=$(aws ec2 describe-instances | jq -r '.Reservations[].Instances')
 
