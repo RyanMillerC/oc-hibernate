@@ -3,12 +3,6 @@
   vars:
     cluster_id: '*'
   tasks:
-    #- name: Get Control Plane EC2 Instances
-    #  amazon.aws.ec2_instance_info:
-    #    filters:
-    #      "tag:Name": "{{cluster_id}}-master-*"
-    #  register: control_plane_instances
-
     - name: Stop Control Plane EC2 Instances
       amazon.aws.ec2_instance:
         filters:
@@ -16,12 +10,6 @@
         state: stopped
         wait: true
         wait_timeout: 300
-
-    # - name: Get Worker EC2 Instances
-    #   amazon.aws.ec2_instance_info:
-    #     filters:
-    #       "tag:Name": "{{cluster_id}}-worker-*"
-    #   register: worker_instances
 
     - name: Stop Worker EC2 Instances
       amazon.aws.ec2_instance:
