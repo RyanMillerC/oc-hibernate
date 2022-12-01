@@ -8,3 +8,7 @@ dist
 
 # Ignore tmp files
 tmp
+
+# Ignore class/cache files
+*.pyc
+__pycache__
