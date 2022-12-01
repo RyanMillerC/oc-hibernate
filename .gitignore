@@ -1,1 +1,7 @@
+# Ignore from pyinstall build
+*.spec
+build
+dist
+
+# Ignore virtual environments
 .venv
