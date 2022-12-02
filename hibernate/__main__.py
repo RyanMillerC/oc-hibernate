@@ -9,7 +9,7 @@ from hibernate import helper
 
 @click.group(help="Hibernate (Start/Stop) OpenShift clusters")
 def cli():
-    pass
+    helper.run_preflight_checks()
 
 
 @click.command(name="print", help="Print a message")
