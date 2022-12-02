@@ -1,7 +1,5 @@
 - hosts: localhost
   connection: local
-  vars:
-    cluster_id: '*'
   tasks:
     - name: Stop Worker EC2 Instances
       amazon.aws.ec2_instance:

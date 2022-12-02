@@ -23,8 +23,15 @@ cli.add_command(print_message)
 
 
 @click.command(help="Print hibernation status")
-def status():
-    aws_cmd_output = sh.aws('ec2', 'describe-instances', '--output', 'json', _tty_out=False)
+@click.argument("CLUSTER_ID")
+def status(cluster_id):
+    aws_cmd_output = sh.aws(
+        'ec2',
+        'describe-instances',
+        '--filter', f'Name=tag:Name,Values={cluster_id}-*',
+        '--output', 'json',
+        _tty_out=False
+    )
     aws_response = json.loads(aws_cmd_output.stdout)
     ec2_instances = [
         reservation["Instances"][0] for reservation in aws_response["Reservations"]
@@ -50,14 +57,26 @@ cli.add_command(status)
 
 
 @click.command(help="Unhibernate (start up) a cluster")
-def start():
-    playbook_path = helper.get_resource_path('playbooks/test.yml')
-    sh.ansible_playbook(playbook_path, _in=sys.stdin, _out=sys.stdout)
+@click.argument("CLUSTER_ID")
+def start(cluster_id):
+    playbook_path = helper.get_resource_path('playbooks/start.yml')
+    sh.ansible_playbook(
+        playbook_path,
+        "--extra-vars", f'cluster_id="{cluster_id}"',
+        _in=sys.stdin,
+        _out=sys.stdout
+    )
 cli.add_command(start)
 
 
 @click.command(help="Hibernate (shut down) a cluster")
-def stop():
-    playbook_path = helper.get_resource_path('playbooks/test.yml')
-    sh.ansible_playbook(playbook_path, _in=sys.stdin, _out=sys.stdout)
+@click.argument("CLUSTER_ID")
+def stop(cluster_id):
+    playbook_path = helper.get_resource_path('playbooks/stop.yml')
+    sh.ansible_playbook(
+        playbook_path,
+        "--extra-vars", f'cluster_id="{cluster_id}"',
+        _in=sys.stdin,
+        _out=sys.stdout
+    )
 cli.add_command(stop)
