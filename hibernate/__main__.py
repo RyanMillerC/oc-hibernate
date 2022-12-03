@@ -17,6 +17,30 @@ def cli():
     helper.run_preflight_checks()
 
 
+@click.command(help="Approve new certificates to replace certs that expired while the cluster was stopped")
+def fix_certs():
+    try:
+        oc_cmd_output = sh.oc('get', 'csr', '-o', 'json')
+        oc_response = json.loads(oc_cmd_output.stdout)
+
+        filtered_csrs = []
+        for csr in oc_response['items']:
+            name = csr['metadata']['name']
+            conditions = []
+            for condition in csr['status']['conditions']:
+                conditions.append(condition['type'])
+            if 'Pending' in conditions:
+                filtered_csrs.append({
+                    "name": name,
+                    "conditions": conditions
+                })
+        print(filtered_csrs)
+    except Exception as exception:
+        raise exception
+
+cli.add_command(fix_certs)
+
+
 @click.command(help="Print status of cluster machines")
 @click.argument("CLUSTER_ID")
 def status(cluster_id):
