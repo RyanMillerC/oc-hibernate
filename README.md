@@ -15,6 +15,11 @@
   install, run `make build`. It will create a binary under
   `./dist/oc-hibernate`. Copy that binary into your PATH.
 
+* **Q: Are there prerequisites?**
+* **A:** Yes. `aws` and `ansible-playbook` (provided by ansible package) need
+  to be in your PATH. Install those through your package manager. Additionally,
+  you must configure your AWS credentials/region with `aws configure`.
+
 ## How to Use
 
 ### Check status of a cluster
