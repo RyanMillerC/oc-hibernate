@@ -21,20 +21,33 @@ def cli():
 def fix_certs():
     try:
         oc_cmd_output = sh.oc("get", "csr", "-o", "json")
-        oc_response = json.loads(oc_cmd_output.stdout)
+    except sh.ErrorReturnCode as exception:
+        print(exception.stdout.decode('utf-8'), end="")
+        helper.print_error(exception.stderr.decode('utf-8'), end="")
+        sys.exit(1)
 
-        pending_csr_names = []
-        for csr in oc_response["items"]:
-            name = csr["metadata"]["name"]
-            conditions = []
-            if csr["status"]:
-                for condition in csr["status"]["conditions"]:
-                    conditions.append(condition["type"])
-            else:
-                conditions.append("Pending")
-            if "Pending" in conditions:
-                pending_csr_names.append(name)
+    oc_response = json.loads(oc_cmd_output.stdout)
 
+    # Check each CSR for Pending status
+    pending_csr_names = []
+    for csr in oc_response["items"]:
+        name = csr["metadata"]["name"]
+        conditions = []
+        if csr["status"] and csr["status"]["conditions"]:
+            for condition in csr["status"]["conditions"]:
+                conditions.append(condition["type"])
+        else:
+            # CSRs without a status/condition are assumed to be pending
+            conditions.append("Pending")
+        if "Pending" in conditions:
+            pending_csr_names.append(name)
+
+    if len(pending_csr_names) == 0:
+        print('No CSRs to approve!')
+        sys.exit()
+
+    # Approve all pending CSRs
+    try:
         oc_cmd_output = sh.oc(
             "adm",
             "certificate",
@@ -43,9 +56,10 @@ def fix_certs():
             _in=sys.stdin,
             _out=sys.stdout
         )
-    except Exception as exception:
-        raise exception
-
+    except sh.ErrorReturnCode as exception:
+        print(exception.stdout.decode('utf-8'), end="")
+        helper.print_error(exception.stderr.decode('utf-8'), end="")
+        sys.exit(1)
 cli.add_command(fix_certs)
 
 
