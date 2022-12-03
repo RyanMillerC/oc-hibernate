@@ -110,13 +110,20 @@ cli.add_command(start)
 
 
 @click.command(help="Stop (shut down) a cluster")
+@click.argument("CLUSTER_ID", required=False)
 @click.option(
-    "--cluster-id",
-    help="Manually set cluster ID (Defaults to pulling ID from OpenShift)"
+    "--current-context",
+    help="Stop the cluster in your current context",
+    is_flag=True
 )
-def stop(cluster_id):
-    if not cluster_id:
+def stop(cluster_id, current_context):
+    if current_context:
         cluster_id = get_cluster_id()
+
+    if not cluster_id:
+        helper.print_error("ERROR: Must provide cluster_id or use --current_context")
+        sys.exit(1)
+
     playbook_path = helper.get_resource_path('playbooks/stop.yml')
     sh.ansible_playbook(
         playbook_path,
