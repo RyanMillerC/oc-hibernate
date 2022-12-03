@@ -64,10 +64,26 @@ cli.add_command(fix_certs)
 
 
 @click.command(help="Print status of cluster machines")
-@click.argument("CLUSTER_ID")
+@click.argument("CLUSTER_ID", required=False)
 def status(cluster_id):
-
     clusters = get_availible_cluster_ids()
+
+    # If cluster_id was passed, print machine statuses for that cluster
+    if cluster_id:
+        for cluster in clusters:
+            if cluster['cluster_id'] == cluster_id:
+                template = "{instance:50}{state:10}"
+                print(template.format(instance="INSTANCE", state="STATE"))
+                for instance in cluster['machines']:
+                    print(
+                        template.format(
+                            instance=instance['name'],
+                            state=instance['state']
+                        )
+                    )
+        sys.exit()
+
+    # Default - if no cluster_id was passed, print all cluster statuses
     template = "{cluster_id:30}{state:10}"
     print(template.format(cluster_id="CLUSTER", state="STATE"))
     for cluster in clusters:
