@@ -12,12 +12,12 @@ import sh
 from hibernate import helper
 
 
-@click.group(help="Hibernate (Start/Stop) OpenShift clusters")
+@click.group(help="Stop and resume OpenShift clusters in AWS")
 def cli():
     helper.run_preflight_checks()
 
 
-@click.command(help="Print hibernation status")
+@click.command(help="Print status of cluster machines")
 @click.argument("CLUSTER_ID")
 def status(cluster_id):
     aws_cmd_output = sh.aws(
@@ -51,7 +51,7 @@ def status(cluster_id):
 cli.add_command(status)
 
 
-@click.command(help="Unhibernate (start up) a cluster")
+@click.command(help="Resume (start up) a cluster")
 @click.argument("CLUSTER_ID")
 def start(cluster_id):
     playbook_path = helper.get_resource_path('playbooks/start.yml')
@@ -64,7 +64,7 @@ def start(cluster_id):
 cli.add_command(start)
 
 
-@click.command(help="Hibernate (shut down) a cluster")
+@click.command(help="Stop (shut down) a cluster")
 @click.argument("CLUSTER_ID")
 def stop(cluster_id):
     playbook_path = helper.get_resource_path('playbooks/stop.yml')
