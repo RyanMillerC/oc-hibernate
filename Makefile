@@ -3,7 +3,7 @@
 build:
 	pyinstaller cli.py \
 		--name oc-hibernate \
-		--add-data "./playbooks/test.yml:./playbooks" \
+		--add-data "./playbooks:./playbooks" \
 		--onefile
 
 clean:
