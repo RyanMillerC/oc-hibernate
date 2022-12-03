@@ -1,4 +1,5 @@
-- hosts: localhost
+- name: Stop OpenShift cluster
+  hosts: localhost
   connection: local
   tasks:
     - name: Stop Worker EC2 Instances
