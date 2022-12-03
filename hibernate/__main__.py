@@ -20,21 +20,29 @@ def cli():
 @click.command(help="Approve new certificates to replace certs that expired while the cluster was stopped")
 def fix_certs():
     try:
-        oc_cmd_output = sh.oc('get', 'csr', '-o', 'json')
+        oc_cmd_output = sh.oc("get", "csr", "-o", "json")
         oc_response = json.loads(oc_cmd_output.stdout)
 
-        filtered_csrs = []
-        for csr in oc_response['items']:
-            name = csr['metadata']['name']
+        pending_csr_names = []
+        for csr in oc_response["items"]:
+            name = csr["metadata"]["name"]
             conditions = []
-            for condition in csr['status']['conditions']:
-                conditions.append(condition['type'])
-            if 'Pending' in conditions:
-                filtered_csrs.append({
-                    "name": name,
-                    "conditions": conditions
-                })
-        print(filtered_csrs)
+            if csr["status"]:
+                for condition in csr["status"]["conditions"]:
+                    conditions.append(condition["type"])
+            else:
+                conditions.append("Pending")
+            if "Pending" in conditions:
+                pending_csr_names.append(name)
+
+        oc_cmd_output = sh.oc(
+            "adm",
+            "certificate",
+            "approve",
+            *pending_csr_names,
+            _in=sys.stdin,
+            _out=sys.stdout
+        )
     except Exception as exception:
         raise exception
 
