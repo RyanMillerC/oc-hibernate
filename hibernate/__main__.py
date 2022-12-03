@@ -17,16 +17,6 @@ def cli():
     helper.run_preflight_checks()
 
 
-@click.command(name="print", help="Print a message")
-@click.option("--name", help="Name to display in message")
-def print_message(name):
-    if name:
-        print(f"Hello {name}!")
-    else:
-        print(f"Hello World!")
-cli.add_command(print_message)
-
-
 @click.command(help="Print hibernation status")
 @click.argument("CLUSTER_ID")
 def status(cluster_id):
