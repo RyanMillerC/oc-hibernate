@@ -66,30 +66,12 @@ cli.add_command(fix_certs)
 @click.command(help="Print status of cluster machines")
 @click.argument("CLUSTER_ID")
 def status(cluster_id):
-    aws_cmd_output = sh.aws(
-        'ec2',
-        'describe-instances',
-        '--filter', f'Name=tag:Name,Values={cluster_id}-*',
-        '--output', 'json',
-        _tty_out=False
-    )
-    aws_response = json.loads(aws_cmd_output.stdout)
-    ec2_instances = [
-        reservation["Instances"][0] for reservation in aws_response["Reservations"]
-    ]
 
-    filtered_instances = []
-    for ec2_instance in ec2_instances:
-        name = "Unknown"
-        for tag in ec2_instance["Tags"]:
-            if tag['Key'] == "Name":
-                name = tag['Value']
-        state = ec2_instance['State']['Name']
-        filtered_instances.append({
-            "Name": name,
-            "State": state,
-        })
+    clusters = get_availible_cluster_ids()
+    print(clusters)
+    sys.exit()
 
+    # TODO: Format output
     template = "{Name:50}{State:10}"
     print(template.format(Name="NAME", State="STATE"))
     for instance in filtered_instances:
@@ -158,10 +140,12 @@ def get_availible_cluster_ids():
     """Get cluster IDs of clusters in AWS. Looks at prefix on EC2 instance
     names to determine cluster ID.
     """
+
+    # Get master-0 node of every cluster available in the AWS region
     aws_cmd_output = sh.aws(
         'ec2',
         'describe-instances',
-        '--filter', f'Name=tag:Name,Values=*-master-*',
+        '--filter', f'Name=tag:Name,Values=*-master-0',
         '--output', 'json',
         _tty_out=False
     )
@@ -170,7 +154,8 @@ def get_availible_cluster_ids():
         reservation["Instances"][0] for reservation in aws_response["Reservations"]
     ]
 
-    cluster_ids = []
+    # Create list of clusters by taking prefix from instance name as cluster_id
+    clusters = []
     for ec2_instance in ec2_instances:
         name = "Unknown"
         for tag in ec2_instance["Tags"]:
@@ -178,7 +163,42 @@ def get_availible_cluster_ids():
                 name = tag['Value']
         # Split string and grab beginning of string up to master
         cluster_id = name.split('-master-')[0]
-        if not cluster_id in cluster_ids:
-            cluster_ids.append(cluster_id)
+        clusters.append({'cluster_id': cluster_id})
 
-    return cluster_ids
+    for cluster in clusters:
+        # Get all machines for a given cluster
+        aws_cmd_output = sh.aws(
+            'ec2',
+            'describe-instances',
+            '--filter', f'Name=tag:Name,Values={cluster["cluster_id"]}-*',
+            '--output', 'json',
+            _tty_out=False
+        )
+        aws_response = json.loads(aws_cmd_output.stdout)
+        ec2_instances = [
+            reservation["Instances"][0] for reservation in aws_response["Reservations"]
+        ]
+
+        # Get machine names and statuses
+        machines = []
+        for ec2_instance in ec2_instances:
+            name = "Unknown"
+            for tag in ec2_instance["Tags"]:
+                if tag['Key'] == "Name":
+                    name = tag['Value']
+            state = ec2_instance['State']['Name']
+            machines.append({
+                "name": name,
+                "state": state,
+            })
+        cluster['machines'] = machines
+
+        # Compare individual machine statuses to determine overall cluster status
+        cluster_state = machines[0]['state']
+        for machine in machines:
+            if machine['state'] != cluster_state:
+                cluster_state = "mixed"
+                break
+        cluster["state"] = cluster_state
+
+    return clusters
