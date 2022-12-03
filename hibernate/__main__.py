@@ -1,3 +1,8 @@
+"""Main module for hibernate. Hibernate uses the click CLI package. The main
+command `oc-hibernate` does nothing except perform preflight checks. The
+subcommands `oc-hibernate COMMAND` actually perform functions.
+"""
+
 import json
 import sys
 

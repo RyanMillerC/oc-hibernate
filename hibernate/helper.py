@@ -1,3 +1,6 @@
+"""Helper functions for the hibernate package.
+"""
+
 import os
 import sys
 
