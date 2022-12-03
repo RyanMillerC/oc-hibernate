@@ -111,8 +111,13 @@ cli.add_command(start)
 
 
 @click.command(help="Stop (shut down) a cluster")
-@click.argument("CLUSTER_ID")
+@click.option(
+    "--cluster-id",
+    help="Manually set cluster ID (Defaults to pulling ID from OpenShift)"
+)
 def stop(cluster_id):
+    if not cluster_id:
+        cluster_id = get_cluster_id()
     playbook_path = helper.get_resource_path('playbooks/stop.yml')
     sh.ansible_playbook(
         playbook_path,
@@ -121,3 +126,29 @@ def stop(cluster_id):
         _out=sys.stdout
     )
 cli.add_command(stop)
+
+
+def get_cluster_id():
+    """Get cluster ID from running OpenShift cluster."""
+    try:
+        oc_cmd_output = sh.oc(
+            "get",
+            "machines",
+            "-n", "openshift-machine-api",
+            "-o", "json"
+        )
+    except sh.ErrorReturnCode as exception:
+        print(exception.stdout.decode('utf-8'), end="")
+        helper.print_error(exception.stderr.decode('utf-8'), end="")
+        sys.exit(1)
+
+    oc_response = json.loads(oc_cmd_output.stdout)
+
+    # Grab the cluster ID from the first machine. It doesn't matter what
+    # machine the label is grabbed from. All machines share the same label.
+    cluster_id = oc_response['items'][0]['metadata']['labels'] \
+                            ['machine.openshift.io/cluster-api-cluster']
+
+    # TODO: Maybe fail better here if no machines exist
+
+    return cluster_id
