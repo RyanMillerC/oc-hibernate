@@ -68,14 +68,15 @@ cli.add_command(fix_certs)
 def status(cluster_id):
 
     clusters = get_availible_cluster_ids()
-    print(clusters)
-    sys.exit()
-
-    # TODO: Format output
-    template = "{Name:50}{State:10}"
-    print(template.format(Name="NAME", State="STATE"))
-    for instance in filtered_instances:
-        print(template.format(**instance))
+    template = "{cluster_id:30}{state:10}"
+    print(template.format(cluster_id="CLUSTER", state="STATE"))
+    for cluster in clusters:
+        print(
+            template.format(
+                cluster_id=cluster['cluster_id'],
+                state=cluster['state']
+            )
+        )
 cli.add_command(status)
 
 
