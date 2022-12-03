@@ -12,3 +12,6 @@ tmp
 # Ignore class/cache files
 *.pyc
 __pycache__
+
+# Ignore vim
+*.swp
