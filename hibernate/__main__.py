@@ -152,3 +152,33 @@ def get_cluster_id():
     # TODO: Maybe fail better here if no machines exist
 
     return cluster_id
+
+
+def get_availible_cluster_ids():
+    """Get cluster IDs of clusters in AWS. Looks at prefix on EC2 instance
+    names to determine cluster ID.
+    """
+    aws_cmd_output = sh.aws(
+        'ec2',
+        'describe-instances',
+        '--filter', f'Name=tag:Name,Values=*-master-*',
+        '--output', 'json',
+        _tty_out=False
+    )
+    aws_response = json.loads(aws_cmd_output.stdout)
+    ec2_instances = [
+        reservation["Instances"][0] for reservation in aws_response["Reservations"]
+    ]
+
+    cluster_ids = []
+    for ec2_instance in ec2_instances:
+        name = "Unknown"
+        for tag in ec2_instance["Tags"]:
+            if tag['Key'] == "Name":
+                name = tag['Value']
+        # Split string and grab beginning of string up to master
+        cluster_id = name.split('-master-')[0]
+        if not cluster_id in cluster_ids:
+            cluster_ids.append(cluster_id)
+
+    return cluster_ids
