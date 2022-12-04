@@ -22,10 +22,10 @@ must configure your AWS credentials/region with `aws configure`.
 
 ## How to Use
 
-### Check status of a cluster
+### Check status of all clusters
 
 ```
-$ oc hibernate status CLUSTER_NAME
+$ oc hibernate list
 ```
 
 ### Stop a cluster

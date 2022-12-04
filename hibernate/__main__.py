@@ -63,9 +63,9 @@ def fix_certs():
 cli.add_command(fix_certs)
 
 
-@click.command(help="Print status of cluster machines")
+@click.command(name="list", help="List status of available clusters")
 @click.argument("CLUSTER_ID", required=False)
-def status(cluster_id):
+def list_clusters(cluster_id):
     clusters = get_availible_cluster_ids()
 
     # If cluster_id was passed, print machine statuses for that cluster
@@ -93,7 +93,7 @@ def status(cluster_id):
                 state=cluster['state']
             )
         )
-cli.add_command(status)
+cli.add_command(list_clusters)
 
 
 @click.command(help="Resume (start up) a cluster")
