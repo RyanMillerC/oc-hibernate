@@ -8,3 +8,6 @@ build:
 
 clean:
 	rm -rf build dist *.spec
+
+install:
+	cp ./dist/oc-hibernate "${HOME}/bin"
