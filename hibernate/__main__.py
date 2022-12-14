@@ -12,12 +12,12 @@ import sh
 from hibernate import helper
 
 
-@click.group(help="Stop and resume OpenShift clusters in AWS")
+@click.group(help="Stop and resume OpenShift clusters in AWS.")
 def cli():
     helper.run_preflight_checks()
 
 
-@click.command(help="Approve new certificates to replace certs that expired while the cluster was stopped")
+@click.command(help="Approve pending certificate signing requests.")
 def fix_certs():
     try:
         oc_cmd_output = sh.oc("get", "csr", "-o", "json")
@@ -63,10 +63,15 @@ def fix_certs():
 cli.add_command(fix_certs)
 
 
-@click.command(name="list", help="List status of available clusters")
+@click.command(name="list", help="List status of available clusters.")
 @click.argument("CLUSTER_ID", required=False)
-def list_clusters(cluster_id):
-    clusters = get_availible_cluster_ids()
+@click.option(
+    "--profile",
+    default="default",
+    help="Use specific AWS profile instead of default."
+)
+def list_clusters(cluster_id, profile):
+    clusters = get_availible_cluster_ids(profile)
 
     # If cluster_id was passed, print machine statuses for that cluster
     if cluster_id:
@@ -96,27 +101,38 @@ def list_clusters(cluster_id):
 cli.add_command(list_clusters)
 
 
-@click.command(help="Resume (start up) a cluster")
+@click.command(help="Resume (start up) a cluster.")
 @click.argument("CLUSTER_ID")
-def start(cluster_id):
+@click.option(
+    "--profile",
+    default="default",
+    help="Use specific AWS profile instead of default."
+)
+def start(cluster_id, profile):
     playbook_path = helper.get_resource_path('playbooks/start.yml')
     sh.ansible_playbook(
         playbook_path,
         "--extra-vars", f'cluster_id="{cluster_id}"',
+        "--extra-vars", f'aws_profile="{profile}"',
         _in=sys.stdin,
         _out=sys.stdout
     )
 cli.add_command(start)
 
 
-@click.command(help="Stop (shut down) a cluster")
+@click.command(help="Stop (shut down) a cluster.")
 @click.argument("CLUSTER_ID", required=False)
 @click.option(
     "--current-context",
-    help="Stop the cluster in your current context",
+    help="Stop the cluster in your current context.",
     is_flag=True
 )
-def stop(cluster_id, current_context):
+@click.option(
+    "--profile",
+    default="default",
+    help="Use specific AWS profile instead of default."
+)
+def stop(cluster_id, current_context, profile):
     if current_context:
         cluster_id = get_cluster_id()
 
@@ -128,6 +144,7 @@ def stop(cluster_id, current_context):
     sh.ansible_playbook(
         playbook_path,
         "--extra-vars", f'cluster_id="{cluster_id}"',
+        "--extra-vars", f'aws_profile="{profile}"',
         _in=sys.stdin,
         _out=sys.stdout
     )
@@ -160,9 +177,12 @@ def get_cluster_id():
     return cluster_id
 
 
-def get_availible_cluster_ids():
+def get_availible_cluster_ids(aws_profile):
     """Get cluster IDs of clusters in AWS. Looks at prefix on EC2 instance
     names to determine cluster ID.
+
+    :param str aws_profile:
+        Profile name is passed to AWS CLI
     """
 
     # Get master-0 node of every cluster available in the AWS region
@@ -171,6 +191,7 @@ def get_availible_cluster_ids():
         'describe-instances',
         '--filter', f'Name=tag:Name,Values=*-master-0',
         '--output', 'json',
+        '--profile', aws_profile,
         _tty_out=False
     )
     aws_response = json.loads(aws_cmd_output.stdout)
@@ -196,6 +217,7 @@ def get_availible_cluster_ids():
             'describe-instances',
             '--filter', f'Name=tag:Name,Values={cluster["cluster_id"]}-*',
             '--output', 'json',
+            '--profile', aws_profile,
             _tty_out=False
         )
         aws_response = json.loads(aws_cmd_output.stdout)

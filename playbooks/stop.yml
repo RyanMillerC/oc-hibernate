@@ -1,11 +1,14 @@
 - name: Stop OpenShift cluster
   hosts: localhost
   connection: local
+  vars:
+    aws_profile: default
   tasks:
     - name: Stop Worker EC2 Instances
       amazon.aws.ec2_instance:
         filters:
           "tag:Name": "{{cluster_id}}-worker-*"
+        profile: "{{ aws_profile }}"
         state: stopped
         wait: true
         wait_timeout: 300
@@ -14,6 +17,7 @@
       amazon.aws.ec2_instance:
         filters:
           "tag:Name": "{{cluster_id}}-master-*"
+        profile: "{{ aws_profile }}"
         state: stopped
         wait: true
         wait_timeout: 300
