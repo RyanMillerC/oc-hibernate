@@ -12,13 +12,15 @@ import sh
 from hibernate import helper
 
 
-@click.group(help="Stop and resume OpenShift clusters in AWS.")
+@click.group()
 def cli():
+    """Stop and resume OpenShift clusters in AWS."""
     helper.run_preflight_checks()
 
 
-@click.command(help="Approve pending certificate signing requests.")
+@cli.command()
 def fix_certs():
+    """Approve pending certificate signing requests."""
     try:
         oc_cmd_output = sh.oc("get", "csr", "-o", "json")
     except sh.ErrorReturnCode as exception:
@@ -60,10 +62,9 @@ def fix_certs():
         print(exception.stdout.decode('utf-8'), end="")
         helper.print_error(exception.stderr.decode('utf-8'), end="")
         sys.exit(1)
-cli.add_command(fix_certs)
 
 
-@click.command(name="list", help="List status of available clusters.")
+@cli.command(name="list")
 @click.argument("CLUSTER_ID", required=False)
 @click.option(
     "--profile",
@@ -71,6 +72,7 @@ cli.add_command(fix_certs)
     help="Use specific AWS profile instead of default."
 )
 def list_clusters(cluster_id, profile):
+    """List status of available clusters."""
     clusters = get_availible_cluster_ids(profile)
 
     # If cluster_id was passed, print machine statuses for that cluster
@@ -98,10 +100,9 @@ def list_clusters(cluster_id, profile):
                 state=cluster['state']
             )
         )
-cli.add_command(list_clusters)
 
 
-@click.command(help="Resume (start up) a cluster.")
+@cli.command()
 @click.argument("CLUSTER_ID")
 @click.option(
     "--profile",
@@ -109,6 +110,7 @@ cli.add_command(list_clusters)
     help="Use specific AWS profile instead of default."
 )
 def start(cluster_id, profile):
+    """Resume (start up) a cluster."""
     playbook_path = helper.get_resource_path('playbooks/start.yml')
     sh.ansible_playbook(
         playbook_path,
@@ -117,10 +119,9 @@ def start(cluster_id, profile):
         _in=sys.stdin,
         _out=sys.stdout
     )
-cli.add_command(start)
 
 
-@click.command(help="Stop (shut down) a cluster.")
+@cli.command()
 @click.argument("CLUSTER_ID", required=False)
 @click.option(
     "--current-context",
@@ -133,6 +134,7 @@ cli.add_command(start)
     help="Use specific AWS profile instead of default."
 )
 def stop(cluster_id, current_context, profile):
+    """Stop (shut down) a cluster."""
     if current_context:
         cluster_id = get_cluster_id()
 
@@ -148,7 +150,6 @@ def stop(cluster_id, current_context, profile):
         _in=sys.stdin,
         _out=sys.stdout
     )
-cli.add_command(stop)
 
 
 def get_cluster_id():
