@@ -1,11 +1,38 @@
 """Helper functions for the hibernate package.
 """
 
+import base64
 import json
 import os
 import sys
 
 import sh
+
+
+def get_aws_creds_from_ocp():
+    """Pull AWS credentials from the oc-hibernate secret in the kube-admin
+    namespace (if it exists)."""
+    try:
+        aws_creds_secret = oc(
+            "get",
+            "secret",
+            "oc-hibernate",
+            "--namespace", "kube-system",
+            "--output", "json"
+        )
+    except Exception as exception:
+        print("There was an error")
+        raise exception
+
+    response = {}
+    response['access_key'] = base64.b64decode(
+        aws_creds_secret['data']['aws_access_key_id']
+    ).decode('utf-8')
+    response['secret_access_key'] = base64.b64decode(
+        aws_creds_secret['data']['aws_secret_access_key']
+    ).decode('utf-8')
+
+    return response
 
 
 def get_cluster_id():

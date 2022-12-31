@@ -1,0 +1,20 @@
+{
+    "apiVersion": "v1",
+    "data": {
+        "aws_access_key_id": "QUNDRVNTX0tFWQ==",
+        "aws_secret_access_key": "U0VDUkVUX0FDQ0VTU19LRVk=",
+        "credentials": "This field doesn't matter to hibernate"
+    },
+    "kind": "Secret",
+    "metadata": {
+        "annotations": {
+            "cloudcredential.openshift.io/credentials-request": "openshift-cloud-credential-operator/oc-hibernate"
+        },
+        "creationTimestamp": "2022-12-31T16:43:38Z",
+        "name": "oc-hibernate",
+        "namespace": "kube-system",
+        "resourceVersion": "419021",
+        "uid": "b6516c8c-70b9-4e35-9718-a453f144eaf2"
+    },
+    "type": "Opaque"
+}
