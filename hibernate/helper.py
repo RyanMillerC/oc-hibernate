@@ -110,6 +110,8 @@ def get_availible_cluster_ids(aws_profile):
 def get_resource_path(relative_path):
     """Get absolute path to resource. Works for dev and for PyInstaller.
     https://stackoverflow.com/a/31966932
+
+    This is used for Ansible playbooks.
     """
     try:
         # PyInstaller creates a temp folder and stores path in _MEIPASS
