@@ -8,6 +8,8 @@ import sys
 
 import sh
 
+from hibernate import exceptions
+
 
 def get_aws_creds_from_ocp():
     """Pull AWS credentials from the oc-hibernate secret in the kube-admin
@@ -20,9 +22,13 @@ def get_aws_creds_from_ocp():
             "--namespace", "kube-system",
             "--output", "json"
         )
-    except Exception as exception:
-        print("There was an error")
-        raise exception
+    except sh.ErrorReturnCode as exception:
+        not_found_message = b'Error from server (NotFound): secrets "oc-hibernate" not found\n'
+        if exception.stderr == not_found_message:
+            raise exceptions.OpenShiftNotFound(exception)
+        else:
+            # An unknown error has occurred
+            raise exception
 
     response = {}
     response['access_key'] = base64.b64decode(
@@ -184,10 +190,9 @@ def external_cmd_json_output(cmd, *args, **kwargs):
         cmd_output = command(*args, **kwargs)
         response = json.loads(cmd_output.stdout)
     except sh.ErrorReturnCode as exception:
-        # TODO: Actually log and raise exception
         print(exception.stdout.decode('utf-8'), end="")
         print_error(exception.stderr.decode('utf-8'), end="")
-        sys.exit(1)
+        raise exception
     except Exception as exception:
         # TODO: yeah...
         print("OH NO!")
