@@ -1,3 +1,5 @@
+// This contains two pending CSRs and one that is already approved. This was
+// taken from an OpenShift 4.11 cluster on 2022-12-30.
 {
     "apiVersion": "v1",
     "items": [
