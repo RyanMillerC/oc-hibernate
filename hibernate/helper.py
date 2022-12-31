@@ -210,7 +210,7 @@ def run_preflight_checks():
         sys.exit(1)
 
     # Validate OpenShift CLI is installed
-    output = sh.oc('--version')
+    output = sh.oc('version')
     if output.exit_code != 0:
         print_error(
             'ERROR: "oc" not found in $PATH.',
