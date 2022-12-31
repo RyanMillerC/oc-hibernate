@@ -1,0 +1,114 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "certificates.k8s.io/v1",
+            "kind": "CertificateSigningRequest",
+            "metadata": {
+                "creationTimestamp": "2022-12-30T22:47:49Z",
+                "generateName": "csr-",
+                "name": "csr-4t9vw",
+                "resourceVersion": "49206",
+                "uid": "364ba3f7-0d17-44dd-979b-6d7d003fa81d"
+            },
+            "spec": {
+                "groups": [
+                    "system:serviceaccounts:openshift-machine-config-operator",
+                    "system:authenticated"
+                ],
+                "request": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQkVUQ0J1UUlCQURCWE1SVXdFd1lEVlFRS0V3eHplWE4wWlcwNmJtOWtaWE14UGpBOEJnTlZCQU1UTlhONQpjM1JsYlRwdWIyUmxPbWx3TFRFd0xUQXRNVE16TFRrekxuVnpMV1ZoYzNRdE1pNWpiMjF3ZFhSbExtbHVkR1Z5CmJtRnNNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUUzcms4NndsSjlJS1I1bWxxMHd5UVR1UXcKQndSeDA2ZElGNWxlYlRwcyt1NnJSYTV2MC9vYkNOck1kOW1DT2taY1FlT1RYVU5qSmZFRjdXS1BhS2xSMGFBQQpNQW9HQ0NxR1NNNDlCQU1DQTBjQU1FUUNJRUpxaVVZSWEzUUpVOWZNUTZNa002OHJHVzlmUnUwb3NEenhmS05NCm5PNGVBaUFzcUp2bEJrYjFaWnl5QjVMdXBnMzhLOGN5UHBselVDR0tMOTB2TjlXWHNnPT0KLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tCg==",
+                "signerName": "kubernetes.io/kube-apiserver-client-kubelet",
+                "usages": [
+                    "digital signature",
+                    "key encipherment",
+                    "client auth"
+                ],
+                "username": "system:serviceaccount:openshift-machine-config-operator:node-bootstrapper"
+            },
+            "status": {}
+        },
+        {
+            "apiVersion": "certificates.k8s.io/v1",
+            "kind": "CertificateSigningRequest",
+            "metadata": {
+                "creationTimestamp": "2022-12-30T22:19:58Z",
+                "generateName": "csr-",
+                "name": "csr-76sjh",
+                "resourceVersion": "45523",
+                "uid": "41b6b68c-39d5-4665-806e-33ea77b976d7"
+            },
+            "spec": {
+                "groups": [
+                    "system:serviceaccounts",
+                    "system:serviceaccounts:openshift-machine-config-operator",
+                    "system:authenticated"
+                ],
+                "request": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlJQkV6Q0J1Z0lCQURCWU1SVXdFd1lEVlFRS0V3eHplWE4wWlcwNmJtOWtaWE14UHpBOUJnTlZCQU1UTm5ONQpjM1JsYlRwdWIyUmxPbWx3TFRFd0xUQXRNVFEyTFRJeU1pNTFjeTFsWVhOMExUSXVZMjl0Y0hWMFpTNXBiblJsCmNtNWhiREJaTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCTmt5OUVPSGhrNC9VTFhSUDN6cktYcncKSmxoWlJpMlBWaFgxd0pBcjVTdlI1bFlQeGVrQUlsUjFvT1NKYitLZ2pncjNPKzQ0dVdURkhQc2x4Y01Wemt1ZwpBREFLQmdncWhrak9QUVFEQWdOSUFEQkZBaUJXYmN2T3dZQmcwQUtzeDF3TzRER0wyVUFLNS9DLzF6T0NhUjBSCk4wekp4UUloQVBhRHMzWWpyTWc3OVlUaTF4VE1ZV05PMk9rUnY2VjZBdHloOWxRazZON3MKLS0tLS1FTkQgQ0VSVElGSUNBVEUgUkVRVUVTVC0tLS0tCg==",
+                "signerName": "kubernetes.io/kube-apiserver-client-kubelet",
+                "uid": "c312d11b-8012-41be-b130-f261e7157c67",
+                "usages": [
+                    "digital signature",
+                    "key encipherment",
+                    "client auth"
+                ],
+                "username": "system:serviceaccount:openshift-machine-config-operator:node-bootstrapper"
+            },
+            "status": {}
+        },
+        {
+            "apiVersion": "certificates.k8s.io/v1",
+            "kind": "CertificateSigningRequest",
+            "metadata": {
+                "creationTimestamp": "2022-12-23T02:44:25Z",
+                "generateName": "system:openshift:openshift-monitoring-",
+                "labels": {
+                    "metrics.openshift.io/csr.subject": "prometheus"
+                },
+                "name": "system:openshift:openshift-monitoring-cgrzq",
+                "resourceVersion": "5977",
+                "uid": "cf160745-592b-4688-bbba-e04340225228"
+            },
+            "spec": {
+                "extra": {
+                    "authentication.kubernetes.io/pod-name": [
+                        "cluster-monitoring-operator-c58946cbd-j6gmr"
+                    ],
+                    "authentication.kubernetes.io/pod-uid": [
+                        "ad466f35-8a15-40f9-ab85-54fc43e93642"
+                    ]
+                },
+                "groups": [
+                    "system:serviceaccounts",
+                    "system:serviceaccounts:openshift-monitoring",
+                    "system:authenticated"
+                ],
+                "request": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0KTUlIL01JR21BZ0VBTUVReFFqQkFCZ05WQkFNVE9YTjVjM1JsYlRwelpYSjJhV05sWVdOamIzVnVkRHB2Y0dWdQpjMmhwWm5RdGJXOXVhWFJ2Y21sdVp6cHdjbTl0WlhSb1pYVnpMV3M0Y3pCWk1CTUdCeXFHU000OUFnRUdDQ3FHClNNNDlBd0VIQTBJQUJJbjhsNE9FUXR3UHg5azQ3L0hER1c2aDNubnMyaVRkQXJMTHAwRWlCLzdpczhjckxIbWUKeU8rand0TzVDdUlQQ2o5VlFJTnVQZ0hLR1lDSjRLd0pONzZnQURBS0JnZ3Foa2pPUFFRREFnTklBREJGQWlBYQo3N2J5bmw2R1NzMThOa1JpVWdJRVl6dmc0ZmhIeXRYY2xTTlFuSWxIT0FJaEFKOE5qY1VNaUszLy9DcmMrMjB4CmRwM0tWNFFiZGFESzdMUEFydS9YNE5YYQotLS0tLUVORCBDRVJUSUZJQ0FURSBSRVFVRVNULS0tLS0K",
+                "signerName": "kubernetes.io/kube-apiserver-client",
+                "uid": "1f047666-b085-480c-bf2c-13a55805f3ce",
+                "usages": [
+                    "digital signature",
+                    "key encipherment",
+                    "client auth"
+                ],
+                "username": "system:serviceaccount:openshift-monitoring:cluster-monitoring-operator"
+            },
+            "status": {
+                "certificate": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNoekNDQVcrZ0F3SUJBZ0lSQUlReGRtdEQ5alZHdzNjekVKbnFnWDB3RFFZSktvWklodmNOQVFFTEJRQXcKTFRFU01CQUdBMVVFQ3hNSmIzQmxibk5vYVdaME1SY3dGUVlEVlFRREV3NXJkV0psYkdWMExYTnBaMjVsY2pBZQpGdzB5TWpFeU1qTXdNak01TWpWYUZ3MHlNakV5TWpRd01qTTBNamxhTUVReFFqQkFCZ05WQkFNVE9YTjVjM1JsCmJUcHpaWEoyYVdObFlXTmpiM1Z1ZERwdmNHVnVjMmhwWm5RdGJXOXVhWFJ2Y21sdVp6cHdjbTl0WlhSb1pYVnoKTFdzNGN6QlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJJbjhsNE9FUXR3UHg5azQ3L0hER1c2aAozbm5zMmlUZEFyTExwMEVpQi83aXM4Y3JMSG1leU8rand0TzVDdUlQQ2o5VlFJTnVQZ0hLR1lDSjRLd0pONzZqClZqQlVNQTRHQTFVZER3RUIvd1FFQXdJRm9EQVRCZ05WSFNVRUREQUtCZ2dyQmdFRkJRY0RBakFNQmdOVkhSTUIKQWY4RUFqQUFNQjhHQTFVZEl3UVlNQmFBRkVNa0VpM29KVklWMnhNWVJkTUp0YWZUZ0ZaN01BMEdDU3FHU0liMwpEUUVCQ3dVQUE0SUJBUUE4OVIxUCtaZjBFRGhEcGhtSit1TzE2c0J0VFMyYlNSQ3p6SFJxRDRxemNGS2wrNFcxCnRDellHWmUybnZlWkRRaHk4aWlpSi9uRHA5ZzZGSUdnMTdETDBUbjRYSjZiNmtwOWVDYllkd3A5N3NPNFB4RTAKbitueXpld1ZraEtIK0ZHeDNnTzh3SHRSOFpmRnpsNVMwank3cEN1aklWa0VMNXVEcmIwNUhlc0I2czVxU2YyNwpSbCtGenIxRVZMUzhuNElvRW1KUFc5dTFlejZkY04vamJsRU1oMnhhcDhEcjZFZHJ1VjdmMi9UZzlxZlZiTFVPCm1WczVIeEpTUXZrckhQVVRWSU5DSEFaUnc4RjhXZGVmWTQrdDVkd25GUXo5MERCaTFFMExkVm05KzRKd0J6aGUKbDN5QkVaZHpxTHpsNDJzVW1VMVhzcFRnNDNHemJOdmloeW90Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K",
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2022-12-23T02:44:25Z",
+                        "lastUpdateTime": "2022-12-23T02:44:25Z",
+                        "message": "Auto-approved CSR \"system:openshift:openshift-monitoring-cgrzq\"",
+                        "reason": "AutoApproved",
+                        "status": "True",
+                        "type": "Approved"
+                    }
+                ]
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

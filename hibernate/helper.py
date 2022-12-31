@@ -120,6 +120,27 @@ def get_resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
+def oc(*args, **kwargs):
+    """Call `oc` command and return dictionary from JSON loads of stdout.
+
+    Any input is passed directly to `sh.oc`.
+
+    This function will handle oc command errors.
+    """
+    try:
+        oc_cmd_output = sh.oc(*args, **kwargs)
+        response = json.loads(oc_cmd_output.stdout)
+    except sh.ErrorReturnCode as exception:
+        # TODO: Actually log and raise exception
+        print(exception.stdout.decode('utf-8'), end="")
+        print_error(exception.stderr.decode('utf-8'), end="")
+        sys.exit(1)
+    except Exception as exception:
+        print("OH NO!")
+        raise exception
+    return response
+
+
 def run_preflight_checks():
     """Validate that prerequisites are installed."""
 

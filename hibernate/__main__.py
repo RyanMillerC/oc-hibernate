@@ -21,14 +21,7 @@ def cli():
 @cli.command()
 def fix_certs():
     """Approve pending certificate signing requests."""
-    try:
-        oc_cmd_output = sh.oc("get", "csr", "-o", "json")
-    except sh.ErrorReturnCode as exception:
-        print(exception.stdout.decode('utf-8'), end="")
-        helper.print_error(exception.stderr.decode('utf-8'), end="")
-        sys.exit(1)
-
-    oc_response = json.loads(oc_cmd_output.stdout)
+    oc_response = helper.oc("get", "csr", "-o", "json")
 
     # Check each CSR for Pending status
     pending_csr_names = []
@@ -46,11 +39,8 @@ def fix_certs():
 
     if len(pending_csr_names) == 0:
         print('No CSRs to approve!')
-        sys.exit()
-
-    # Approve all pending CSRs
-    try:
-        oc_cmd_output = sh.oc(
+    else:
+        helper.oc(
             "adm",
             "certificate",
             "approve",
@@ -58,10 +48,6 @@ def fix_certs():
             _in=sys.stdin,
             _out=sys.stdout
         )
-    except sh.ErrorReturnCode as exception:
-        print(exception.stdout.decode('utf-8'), end="")
-        helper.print_error(exception.stderr.decode('utf-8'), end="")
-        sys.exit(1)
 
 
 @cli.command(name="list")
