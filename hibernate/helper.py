@@ -209,6 +209,15 @@ def run_preflight_checks():
         )
         sys.exit(1)
 
+    # Validate OpenShift CLI is installed
+    output = sh.oc('--version')
+    if output.exit_code != 0:
+        print_error(
+            'ERROR: "oc" not found in $PATH.',
+            'Install OpenShift CLI to use this plugin.'
+        )
+        sys.exit(1)
+
 
 def print_error(*args, **kwargs):
     """Works like print(), but prints to stderr instead of stdout."""
