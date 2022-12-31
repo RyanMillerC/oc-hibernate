@@ -122,24 +122,19 @@ def get_resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
-def oc(*args, **kwargs):
-    """Call `oc` command and return dictionary from JSON loads of stdout.
+def oc(*args, stream=False, **kwargs):
+    """Run `oc` external command. If stream is True, output of the command
+    will be streamed to stdout instead of returned. If stream is False, the
+    output from the command will be returned as a dictionary. 
 
-    Any input is passed directly to `sh.oc`.
+    The command being called MUST return valid JSON if stream if False!
 
-    This function will handle oc command errors.
+    This function will handle errors.
     """
-    try:
-        oc_cmd_output = sh.oc(*args, **kwargs)
-        response = json.loads(oc_cmd_output.stdout)
-    except sh.ErrorReturnCode as exception:
-        # TODO: Actually log and raise exception
-        print(exception.stdout.decode('utf-8'), end="")
-        print_error(exception.stderr.decode('utf-8'), end="")
-        sys.exit(1)
-    except Exception as exception:
-        print("OH NO!")
-        raise exception
+    if stream:
+        response = external_cmd_stream_output('oc', *args, **kwargs)
+    else:
+        response = external_cmd_json_output('oc', *args, **kwargs)
     return response
 
 
