@@ -26,7 +26,7 @@ def mock_oc(*args, **kwargs):
 
 
 @patch("hibernate.helper.oc", mock_oc)
-def test_fix_certs(capsys):
+def test_fix_certs():
     runner = CliRunner()
     result = runner.invoke(fix_certs)
     assert result.exit_code == 0
