@@ -15,3 +15,6 @@ __pycache__
 
 # Ignore vim
 *.swp
+
+# Ignore kubeconfig (for testing)
+kubeconfig
