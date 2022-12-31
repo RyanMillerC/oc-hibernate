@@ -143,6 +143,21 @@ def oc(*args, **kwargs):
     return response
 
 
+def external_cmd_stream_output(cmd, *args, **kwargs):
+    """Call an external command in a subshell and stream the output to
+    stdout and stderr.
+
+    :param str cmd:
+        Name or path of command to run
+    :param *args:
+        Optional positional arguments to pass when running the command
+    :param **kwargs:
+        Optional keyword arguments passed to sh.Command instance
+    """
+    command = sh.Command(cmd)
+    return command(*args, _in=sys.stdin, _out=sys.stdout, **kwargs)
+
+
 def run_preflight_checks():
     """Validate that prerequisites are installed."""
 

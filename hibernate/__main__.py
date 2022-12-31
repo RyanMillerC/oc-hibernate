@@ -98,12 +98,11 @@ def list_clusters(cluster_id, profile):
 def start(cluster_id, profile):
     """Resume (start up) a cluster."""
     playbook_path = helper.get_resource_path('playbooks/start.yml')
-    sh.ansible_playbook(
+    helper.external_cmd_stream_output(
+        "ansible_playbook",
         playbook_path,
         "--extra-vars", f'cluster_id="{cluster_id}"',
-        "--extra-vars", f'aws_profile="{profile}"',
-        _in=sys.stdin,
-        _out=sys.stdout
+        "--extra-vars", f'aws_profile="{profile}"'
     )
 
 
@@ -129,10 +128,9 @@ def stop(cluster_id, current_context, profile):
         sys.exit(1)
 
     playbook_path = helper.get_resource_path('playbooks/stop.yml')
-    sh.ansible_playbook(
+    helper.external_cmd_stream_output(
+        "ansible_playbook",
         playbook_path,
         "--extra-vars", f'cluster_id="{cluster_id}"',
-        "--extra-vars", f'aws_profile="{profile}"',
-        _in=sys.stdin,
-        _out=sys.stdout
+        "--extra-vars", f'aws_profile="{profile}"'
     )
