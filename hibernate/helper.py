@@ -143,6 +143,36 @@ def oc(*args, **kwargs):
     return response
 
 
+def external_cmd_json_output(cmd, *args, **kwargs):
+    """Call an external command that returns JSON in a subshell and return a
+    dictionary loaded from stdout.
+
+    The command being called MUST return valid JSON. This function will handle
+    errors.
+
+    :param str cmd:
+        Name or path of command to run
+    :param *args:
+        Optional positional arguments to pass when running the command
+    :param **kwargs:
+        Optional keyword arguments passed to sh.Command instance
+    """
+    try:
+        command = sh.Command(cmd)
+        cmd_output = command(*args, **kwargs)
+        response = json.loads(cmd_output.stdout)
+    except sh.ErrorReturnCode as exception:
+        # TODO: Actually log and raise exception
+        print(exception.stdout.decode('utf-8'), end="")
+        print_error(exception.stderr.decode('utf-8'), end="")
+        sys.exit(1)
+    except Exception as exception:
+        # TODO: yeah...
+        print("OH NO!")
+        raise exception
+    return response
+
+
 def external_cmd_stream_output(cmd, *args, **kwargs):
     """Call an external command in a subshell and stream the output to
     stdout and stderr.

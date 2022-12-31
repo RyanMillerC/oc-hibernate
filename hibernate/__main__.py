@@ -21,7 +21,9 @@ def cli():
 @cli.command()
 def fix_certs():
     """Approve pending certificate signing requests."""
-    oc_response = helper.oc("get", "csr", "-o", "json")
+    oc_response = helper.external_cmd_json_output(
+        "oc", "get", "csr", "-o", "json"
+    )
 
     # Check each CSR for Pending status
     pending_csr_names = []
@@ -40,13 +42,8 @@ def fix_certs():
     if len(pending_csr_names) == 0:
         print('No CSRs to approve!')
     else:
-        helper.oc(
-            "adm",
-            "certificate",
-            "approve",
-            *pending_csr_names,
-            _in=sys.stdin,
-            _out=sys.stdout
+        helper.external_cmd_stream_output(
+            "oc", "adm", "certificate", "approve", *pending_csr_names
         )
 
 
