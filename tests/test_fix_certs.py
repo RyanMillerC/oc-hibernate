@@ -4,19 +4,13 @@ from unittest.mock import patch
 import pytest
 from click.testing import CliRunner
 
+from . import helper
 from hibernate.__main__ import fix_certs
-
-
-def load_json_file(file_path):
-    """Return a dictionary object loaded from a JSON file."""
-    with open(file_path, "r") as stream:
-        json_data = json.load(stream)
-    return json_data
 
 
 def mock_oc(*args, **kwargs):
     if args == ("get", "csr", "-o", "json"):
-        response = load_json_file("./tests/mock_responses/oc_pending_csr.json")
+        response = helper.load_json_file("./tests/mock_responses/oc_pending_csr.json")
 
     elif args == ('adm', 'certificate', 'approve', 'csr-4t9vw', 'csr-76sjh'):
         # TODO: This isn't actually doing anything because the output is being
