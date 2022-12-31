@@ -1,3 +1,7 @@
+// Pulled from an OCP 4.11 cluster with:
+// oc get secret oc-hibernate --namespace kube-system --output json
+//
+// Access keys are dummy values. Nice try hackers!
 {
     "apiVersion": "v1",
     "data": {
