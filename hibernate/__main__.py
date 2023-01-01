@@ -9,7 +9,7 @@ import sys
 import click
 import sh
 
-from hibernate import helper
+from hibernate import external, helper
 
 
 @click.group()
@@ -21,7 +21,7 @@ def cli():
 @cli.command()
 def fix_certs():
     """Approve pending certificate signing requests."""
-    response = helper.oc("get", "csr", "-o", "json")
+    response = external.oc("get", "csr", "-o", "json")
 
     # Check each CSR for Pending status
     pending_csr_names = []
@@ -40,7 +40,7 @@ def fix_certs():
     if len(pending_csr_names) == 0:
         print('No CSRs to approve!')
     else:
-        helper.oc(
+        external.oc(
             "adm",
             "certificate",
             "approve",
@@ -97,7 +97,8 @@ def list_clusters(cluster_id, profile):
 def start(cluster_id, profile):
     """Resume (start up) a cluster."""
     playbook_path = helper.get_resource_path('playbooks/start.yml')
-    helper.external_cmd_stream_output(
+    # TODO: Refactor this
+    external._external_cmd_stream_output(
         "ansible_playbook",
         playbook_path,
         "--extra-vars", f'cluster_id="{cluster_id}"',
@@ -127,7 +128,8 @@ def stop(cluster_id, current_context, profile):
         sys.exit(1)
 
     playbook_path = helper.get_resource_path('playbooks/stop.yml')
-    helper.external_cmd_stream_output(
+    # TODO: Refactor this
+    external._external_cmd_stream_output(
         "ansible_playbook",
         playbook_path,
         "--extra-vars", f'cluster_id="{cluster_id}"',

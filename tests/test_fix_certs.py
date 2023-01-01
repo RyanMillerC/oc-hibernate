@@ -9,7 +9,7 @@ from . import helper
 from hibernate.__main__ import fix_certs
 
 
-@patch("hibernate.helper.oc")
+@patch("hibernate.external.oc")
 def test_fix_certs(mocked):
     def mock_oc(*args, **kwargs):
         if args == ("get", "csr", "-o", "json"):

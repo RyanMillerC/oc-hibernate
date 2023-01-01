@@ -10,7 +10,7 @@ from . import helper as test_helper
 from hibernate import helper, exceptions
 
 
-@patch("hibernate.helper.oc")
+@patch("hibernate.external.oc")
 def test_get_aws_creds_from_ocp_exists(mocked):
     """Test helper.get_aws_creds_from_ocp() when (mocked) OCP returns
     a secret."""
@@ -37,7 +37,7 @@ def test_get_aws_creds_from_ocp_exists(mocked):
         '--output', 'json'
     )
 
-@patch("hibernate.helper.oc")
+@patch("hibernate.external.oc")
 def test_get_aws_creds_from_ocp_does_not_exist(mocked):
     """Test helper.get_aws_creds_from_ocp() when (mocked) OCP returns an
     error because the secret does not exist.
