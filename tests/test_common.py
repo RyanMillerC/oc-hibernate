@@ -1,4 +1,4 @@
-"""Tests for hibernate.helper functions."""
+"""Tests for hibernate.common functions."""
 
 import json
 from unittest.mock import patch
@@ -7,12 +7,12 @@ import pytest
 from sh import ErrorReturnCode
 
 from . import helper as test_helper
-from hibernate import helper, exceptions
+from hibernate import common, exceptions
 
 
 @patch("hibernate.external.oc")
 def test_get_aws_creds_from_ocp_exists(mocked):
-    """Test helper.get_aws_creds_from_ocp() when (mocked) OCP returns
+    """Test common.get_aws_creds_from_ocp() when (mocked) OCP returns
     a secret."""
     def mock_oc(*args, **kwargs):
         response = test_helper.load_json_file(
@@ -21,7 +21,7 @@ def test_get_aws_creds_from_ocp_exists(mocked):
         return response
     mocked.side_effect = mock_oc
 
-    response = helper.get_aws_creds_from_ocp()
+    response = common.get_aws_creds_from_ocp()
 
     expected = {
         "access_key": "ACCESS_KEY",
@@ -39,7 +39,7 @@ def test_get_aws_creds_from_ocp_exists(mocked):
 
 @patch("hibernate.external.oc")
 def test_get_aws_creds_from_ocp_does_not_exist(mocked):
-    """Test helper.get_aws_creds_from_ocp() when (mocked) OCP returns an
+    """Test common.get_aws_creds_from_ocp() when (mocked) OCP returns an
     error because the secret does not exist.
 
     The function should raise an OpenShiftNotFound error.
@@ -53,7 +53,7 @@ def test_get_aws_creds_from_ocp_does_not_exist(mocked):
     mocked.side_effect = mock_oc
 
     with pytest.raises(exceptions.OpenShiftNotFound):
-        helper.get_aws_creds_from_ocp()
+        common.get_aws_creds_from_ocp()
 
     mocked.assert_called_with(
         'get',
