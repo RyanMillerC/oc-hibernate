@@ -1,0 +1,736 @@
+// Output from:
+// aws ec2 describe-instances --filter "Name=tag:Name,Values=ocp-m8cb9-*" --output json
+{
+    "Reservations": [
+        {
+            "Groups": [],
+            "Instances": [
+                {
+                    "AmiLaunchIndex": 0,
+                    "ImageId": "ami-0abf0ec5cdd856934",
+                    "InstanceId": "i-0e00910f7341f0eb9",
+                    "InstanceType": "r5.xlarge",
+                    "LaunchTime": "2022-12-30T22:19:29+00:00",
+                    "Monitoring": {
+                        "State": "disabled"
+                    },
+                    "Placement": {
+                        "AvailabilityZone": "us-east-2a",
+                        "GroupName": "",
+                        "Tenancy": "default"
+                    },
+                    "PrivateDnsName": "ip-10-0-146-222.us-east-2.compute.internal",
+                    "PrivateIpAddress": "10.0.146.222",
+                    "ProductCodes": [],
+                    "PublicDnsName": "",
+                    "State": {
+                        "Code": 80,
+                        "Name": "stopped"
+                    },
+                    "StateTransitionReason": "User initiated (2023-01-01 12:50:07 GMT)",
+                    "SubnetId": "subnet-039e21e67c411e4d5",
+                    "VpcId": "vpc-06daaafa7431a1a7e",
+                    "Architecture": "x86_64",
+                    "BlockDeviceMappings": [
+                        {
+                            "DeviceName": "/dev/xvda",
+                            "Ebs": {
+                                "AttachTime": "2022-12-23T02:45:20+00:00",
+                                "DeleteOnTermination": true,
+                                "Status": "attached",
+                                "VolumeId": "vol-050713981b1a94cdc"
+                            }
+                        }
+                    ],
+                    "ClientToken": "7F519E64-9D44-48C8-98D5-79254C024967",
+                    "EbsOptimized": false,
+                    "EnaSupport": true,
+                    "Hypervisor": "xen",
+                    "IamInstanceProfile": {
+                        "Arn": "arn:aws:iam::586127002594:instance-profile/ocp-m8cb9-worker-profile",
+                        "Id": "AIPAYQ57EJPRH3KWXRV2E"
+                    },
+                    "NetworkInterfaces": [
+                        {
+                            "Attachment": {
+                                "AttachTime": "2022-12-23T02:45:20+00:00",
+                                "AttachmentId": "eni-attach-0ed9a95a12ec4f5f0",
+                                "DeleteOnTermination": true,
+                                "DeviceIndex": 0,
+                                "Status": "attached",
+                                "NetworkCardIndex": 0
+                            },
+                            "Description": "",
+                            "Groups": [
+                                {
+                                    "GroupName": "terraform-20221223023456046500000002",
+                                    "GroupId": "sg-07d1029fe6c947e91"
+                                }
+                            ],
+                            "Ipv6Addresses": [],
+                            "MacAddress": "02:46:8b:27:1a:c8",
+                            "NetworkInterfaceId": "eni-01c9c718d8beb2a34",
+                            "OwnerId": "586127002594",
+                            "PrivateDnsName": "ip-10-0-146-222.us-east-2.compute.internal",
+                            "PrivateIpAddress": "10.0.146.222",
+                            "PrivateIpAddresses": [
+                                {
+                                    "Primary": true,
+                                    "PrivateDnsName": "ip-10-0-146-222.us-east-2.compute.internal",
+                                    "PrivateIpAddress": "10.0.146.222"
+                                }
+                            ],
+                            "SourceDestCheck": true,
+                            "Status": "in-use",
+                            "SubnetId": "subnet-039e21e67c411e4d5",
+                            "VpcId": "vpc-06daaafa7431a1a7e",
+                            "InterfaceType": "interface"
+                        }
+                    ],
+                    "RootDeviceName": "/dev/xvda",
+                    "RootDeviceType": "ebs",
+                    "SecurityGroups": [
+                        {
+                            "GroupName": "terraform-20221223023456046500000002",
+                            "GroupId": "sg-07d1029fe6c947e91"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "StateReason": {
+                        "Code": "Client.UserInitiatedShutdown",
+                        "Message": "Client.UserInitiatedShutdown: User initiated shutdown"
+                    },
+                    "Tags": [
+                        {
+                            "Key": "kubernetes.io/cluster/ocp-m8cb9",
+                            "Value": "owned"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "ocp-m8cb9-worker-us-east-2a-rzkss"
+                        }
+                    ],
+                    "VirtualizationType": "hvm",
+                    "CpuOptions": {
+                        "CoreCount": 2,
+                        "ThreadsPerCore": 2
+                    },
+                    "CapacityReservationSpecification": {
+                        "CapacityReservationPreference": "open"
+                    },
+                    "HibernationOptions": {
+                        "Configured": false
+                    },
+                    "MetadataOptions": {
+                        "State": "applied",
+                        "HttpTokens": "optional",
+                        "HttpPutResponseHopLimit": 1,
+                        "HttpEndpoint": "enabled",
+                        "HttpProtocolIpv6": "disabled",
+                        "InstanceMetadataTags": "disabled"
+                    },
+                    "EnclaveOptions": {
+                        "Enabled": false
+                    },
+                    "PlatformDetails": "Linux/UNIX",
+                    "UsageOperation": "RunInstances",
+                    "UsageOperationUpdateTime": "2022-12-23T02:45:19+00:00",
+                    "PrivateDnsNameOptions": {
+                        "HostnameType": "ip-name",
+                        "EnableResourceNameDnsARecord": false,
+                        "EnableResourceNameDnsAAAARecord": false
+                    },
+                    "MaintenanceOptions": {
+                        "AutoRecovery": "default"
+                    }
+                }
+            ],
+            "OwnerId": "586127002594",
+            "ReservationId": "r-08d48a7281d140e24"
+        },
+        {
+            "Groups": [],
+            "Instances": [
+                {
+                    "AmiLaunchIndex": 0,
+                    "ImageId": "ami-0abf0ec5cdd856934",
+                    "InstanceId": "i-0b0026c402068877c",
+                    "InstanceType": "m5.2xlarge",
+                    "LaunchTime": "2022-12-30T22:16:10+00:00",
+                    "Monitoring": {
+                        "State": "disabled"
+                    },
+                    "Placement": {
+                        "AvailabilityZone": "us-east-2a",
+                        "GroupName": "",
+                        "Tenancy": "default"
+                    },
+                    "PrivateDnsName": "ip-10-0-133-93.us-east-2.compute.internal",
+                    "PrivateIpAddress": "10.0.133.93",
+                    "ProductCodes": [],
+                    "PublicDnsName": "",
+                    "State": {
+                        "Code": 80,
+                        "Name": "stopped"
+                    },
+                    "StateTransitionReason": "User initiated (2023-01-01 12:52:10 GMT)",
+                    "SubnetId": "subnet-039e21e67c411e4d5",
+                    "VpcId": "vpc-06daaafa7431a1a7e",
+                    "Architecture": "x86_64",
+                    "BlockDeviceMappings": [
+                        {
+                            "DeviceName": "/dev/xvda",
+                            "Ebs": {
+                                "AttachTime": "2022-12-23T02:35:09+00:00",
+                                "DeleteOnTermination": true,
+                                "Status": "attached",
+                                "VolumeId": "vol-0a708c9a82ef7d60e"
+                            }
+                        }
+                    ],
+                    "ClientToken": "D7D59ED4-B67F-4E6E-88DF-2721544F2693",
+                    "EbsOptimized": false,
+                    "EnaSupport": true,
+                    "Hypervisor": "xen",
+                    "IamInstanceProfile": {
+                        "Arn": "arn:aws:iam::586127002594:instance-profile/ocp-m8cb9-master-profile",
+                        "Id": "AIPAYQ57EJPRN236Q5C4Q"
+                    },
+                    "NetworkInterfaces": [
+                        {
+                            "Attachment": {
+                                "AttachTime": "2022-12-23T02:35:09+00:00",
+                                "AttachmentId": "eni-attach-035be6e50992d7bf3",
+                                "DeleteOnTermination": false,
+                                "DeviceIndex": 0,
+                                "Status": "attached",
+                                "NetworkCardIndex": 0
+                            },
+                            "Description": "Created By OpenShift Installer",
+                            "Groups": [
+                                {
+                                    "GroupName": "terraform-20221223023456030600000001",
+                                    "GroupId": "sg-0a1f17b684793e4fa"
+                                }
+                            ],
+                            "Ipv6Addresses": [],
+                            "MacAddress": "02:37:49:4a:82:8e",
+                            "NetworkInterfaceId": "eni-0745160fe77be37ba",
+                            "OwnerId": "586127002594",
+                            "PrivateDnsName": "ip-10-0-133-93.us-east-2.compute.internal",
+                            "PrivateIpAddress": "10.0.133.93",
+                            "PrivateIpAddresses": [
+                                {
+                                    "Primary": true,
+                                    "PrivateDnsName": "ip-10-0-133-93.us-east-2.compute.internal",
+                                    "PrivateIpAddress": "10.0.133.93"
+                                }
+                            ],
+                            "SourceDestCheck": true,
+                            "Status": "in-use",
+                            "SubnetId": "subnet-039e21e67c411e4d5",
+                            "VpcId": "vpc-06daaafa7431a1a7e",
+                            "InterfaceType": "interface"
+                        }
+                    ],
+                    "RootDeviceName": "/dev/xvda",
+                    "RootDeviceType": "ebs",
+                    "SecurityGroups": [
+                        {
+                            "GroupName": "terraform-20221223023456030600000001",
+                            "GroupId": "sg-0a1f17b684793e4fa"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "StateReason": {
+                        "Code": "Client.UserInitiatedShutdown",
+                        "Message": "Client.UserInitiatedShutdown: User initiated shutdown"
+                    },
+                    "Tags": [
+                        {
+                            "Key": "Name",
+                            "Value": "ocp-m8cb9-master-0"
+                        },
+                        {
+                            "Key": "kubernetes.io/cluster/ocp-m8cb9",
+                            "Value": "owned"
+                        }
+                    ],
+                    "VirtualizationType": "hvm",
+                    "CpuOptions": {
+                        "CoreCount": 4,
+                        "ThreadsPerCore": 2
+                    },
+                    "CapacityReservationSpecification": {
+                        "CapacityReservationPreference": "open"
+                    },
+                    "HibernationOptions": {
+                        "Configured": false
+                    },
+                    "MetadataOptions": {
+                        "State": "applied",
+                        "HttpTokens": "optional",
+                        "HttpPutResponseHopLimit": 1,
+                        "HttpEndpoint": "enabled",
+                        "HttpProtocolIpv6": "disabled",
+                        "InstanceMetadataTags": "disabled"
+                    },
+                    "EnclaveOptions": {
+                        "Enabled": false
+                    },
+                    "PlatformDetails": "Linux/UNIX",
+                    "UsageOperation": "RunInstances",
+                    "UsageOperationUpdateTime": "2022-12-23T02:35:09+00:00",
+                    "PrivateDnsNameOptions": {
+                        "HostnameType": "ip-name",
+                        "EnableResourceNameDnsARecord": false,
+                        "EnableResourceNameDnsAAAARecord": false
+                    },
+                    "MaintenanceOptions": {
+                        "AutoRecovery": "default"
+                    }
+                }
+            ],
+            "OwnerId": "586127002594",
+            "ReservationId": "r-0a5ae3712212eb0c9"
+        },
+        {
+            "Groups": [],
+            "Instances": [
+                {
+                    "AmiLaunchIndex": 0,
+                    "ImageId": "ami-0abf0ec5cdd856934",
+                    "InstanceId": "i-09bc2575b3f6e62a3",
+                    "InstanceType": "m5.2xlarge",
+                    "LaunchTime": "2022-12-30T22:16:10+00:00",
+                    "Monitoring": {
+                        "State": "disabled"
+                    },
+                    "Placement": {
+                        "AvailabilityZone": "us-east-2b",
+                        "GroupName": "",
+                        "Tenancy": "default"
+                    },
+                    "PrivateDnsName": "ip-10-0-169-93.us-east-2.compute.internal",
+                    "PrivateIpAddress": "10.0.169.93",
+                    "ProductCodes": [],
+                    "PublicDnsName": "",
+                    "State": {
+                        "Code": 80,
+                        "Name": "stopped"
+                    },
+                    "StateTransitionReason": "User initiated (2023-01-01 12:52:11 GMT)",
+                    "SubnetId": "subnet-0680db8a803b2a8e6",
+                    "VpcId": "vpc-06daaafa7431a1a7e",
+                    "Architecture": "x86_64",
+                    "BlockDeviceMappings": [
+                        {
+                            "DeviceName": "/dev/xvda",
+                            "Ebs": {
+                                "AttachTime": "2022-12-23T02:35:10+00:00",
+                                "DeleteOnTermination": true,
+                                "Status": "attached",
+                                "VolumeId": "vol-0707522cb04228507"
+                            }
+                        }
+                    ],
+                    "ClientToken": "7ABCEA21-F58A-4385-9347-2A4DFFFB7AB2",
+                    "EbsOptimized": false,
+                    "EnaSupport": true,
+                    "Hypervisor": "xen",
+                    "IamInstanceProfile": {
+                        "Arn": "arn:aws:iam::586127002594:instance-profile/ocp-m8cb9-master-profile",
+                        "Id": "AIPAYQ57EJPRN236Q5C4Q"
+                    },
+                    "NetworkInterfaces": [
+                        {
+                            "Attachment": {
+                                "AttachTime": "2022-12-23T02:35:09+00:00",
+                                "AttachmentId": "eni-attach-07344bc2f1ea3a5cd",
+                                "DeleteOnTermination": false,
+                                "DeviceIndex": 0,
+                                "Status": "attached",
+                                "NetworkCardIndex": 0
+                            },
+                            "Description": "Created By OpenShift Installer",
+                            "Groups": [
+                                {
+                                    "GroupName": "terraform-20221223023456030600000001",
+                                    "GroupId": "sg-0a1f17b684793e4fa"
+                                }
+                            ],
+                            "Ipv6Addresses": [],
+                            "MacAddress": "06:49:ac:cf:b9:52",
+                            "NetworkInterfaceId": "eni-09c1bca09b31df0ae",
+                            "OwnerId": "586127002594",
+                            "PrivateDnsName": "ip-10-0-169-93.us-east-2.compute.internal",
+                            "PrivateIpAddress": "10.0.169.93",
+                            "PrivateIpAddresses": [
+                                {
+                                    "Primary": true,
+                                    "PrivateDnsName": "ip-10-0-169-93.us-east-2.compute.internal",
+                                    "PrivateIpAddress": "10.0.169.93"
+                                }
+                            ],
+                            "SourceDestCheck": true,
+                            "Status": "in-use",
+                            "SubnetId": "subnet-0680db8a803b2a8e6",
+                            "VpcId": "vpc-06daaafa7431a1a7e",
+                            "InterfaceType": "interface"
+                        }
+                    ],
+                    "RootDeviceName": "/dev/xvda",
+                    "RootDeviceType": "ebs",
+                    "SecurityGroups": [
+                        {
+                            "GroupName": "terraform-20221223023456030600000001",
+                            "GroupId": "sg-0a1f17b684793e4fa"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "StateReason": {
+                        "Code": "Client.UserInitiatedShutdown",
+                        "Message": "Client.UserInitiatedShutdown: User initiated shutdown"
+                    },
+                    "Tags": [
+                        {
+                            "Key": "kubernetes.io/cluster/ocp-m8cb9",
+                            "Value": "owned"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "ocp-m8cb9-master-1"
+                        }
+                    ],
+                    "VirtualizationType": "hvm",
+                    "CpuOptions": {
+                        "CoreCount": 4,
+                        "ThreadsPerCore": 2
+                    },
+                    "CapacityReservationSpecification": {
+                        "CapacityReservationPreference": "open"
+                    },
+                    "HibernationOptions": {
+                        "Configured": false
+                    },
+                    "MetadataOptions": {
+                        "State": "applied",
+                        "HttpTokens": "optional",
+                        "HttpPutResponseHopLimit": 1,
+                        "HttpEndpoint": "enabled",
+                        "HttpProtocolIpv6": "disabled",
+                        "InstanceMetadataTags": "disabled"
+                    },
+                    "EnclaveOptions": {
+                        "Enabled": false
+                    },
+                    "PlatformDetails": "Linux/UNIX",
+                    "UsageOperation": "RunInstances",
+                    "UsageOperationUpdateTime": "2022-12-23T02:35:09+00:00",
+                    "PrivateDnsNameOptions": {
+                        "HostnameType": "ip-name",
+                        "EnableResourceNameDnsARecord": false,
+                        "EnableResourceNameDnsAAAARecord": false
+                    },
+                    "MaintenanceOptions": {
+                        "AutoRecovery": "default"
+                    }
+                }
+            ],
+            "OwnerId": "586127002594",
+            "ReservationId": "r-03738de7688e06967"
+        },
+        {
+            "Groups": [],
+            "Instances": [
+                {
+                    "AmiLaunchIndex": 0,
+                    "ImageId": "ami-0abf0ec5cdd856934",
+                    "InstanceId": "i-0988bc921d98d18d4",
+                    "InstanceType": "r5.xlarge",
+                    "LaunchTime": "2022-12-30T22:19:29+00:00",
+                    "Monitoring": {
+                        "State": "disabled"
+                    },
+                    "Placement": {
+                        "AvailabilityZone": "us-east-2b",
+                        "GroupName": "",
+                        "Tenancy": "default"
+                    },
+                    "PrivateDnsName": "ip-10-0-178-175.us-east-2.compute.internal",
+                    "PrivateIpAddress": "10.0.178.175",
+                    "ProductCodes": [],
+                    "PublicDnsName": "",
+                    "State": {
+                        "Code": 80,
+                        "Name": "stopped"
+                    },
+                    "StateTransitionReason": "User initiated (2023-01-01 12:50:08 GMT)",
+                    "SubnetId": "subnet-0680db8a803b2a8e6",
+                    "VpcId": "vpc-06daaafa7431a1a7e",
+                    "Architecture": "x86_64",
+                    "BlockDeviceMappings": [
+                        {
+                            "DeviceName": "/dev/xvda",
+                            "Ebs": {
+                                "AttachTime": "2022-12-23T02:45:22+00:00",
+                                "DeleteOnTermination": true,
+                                "Status": "attached",
+                                "VolumeId": "vol-0c3d4fbe079270eb2"
+                            }
+                        }
+                    ],
+                    "ClientToken": "849FF18E-022B-4D95-8851-A5B0AE0CE4BE",
+                    "EbsOptimized": false,
+                    "EnaSupport": true,
+                    "Hypervisor": "xen",
+                    "IamInstanceProfile": {
+                        "Arn": "arn:aws:iam::586127002594:instance-profile/ocp-m8cb9-worker-profile",
+                        "Id": "AIPAYQ57EJPRH3KWXRV2E"
+                    },
+                    "NetworkInterfaces": [
+                        {
+                            "Attachment": {
+                                "AttachTime": "2022-12-23T02:45:21+00:00",
+                                "AttachmentId": "eni-attach-07c687cb4d6db5212",
+                                "DeleteOnTermination": true,
+                                "DeviceIndex": 0,
+                                "Status": "attached",
+                                "NetworkCardIndex": 0
+                            },
+                            "Description": "",
+                            "Groups": [
+                                {
+                                    "GroupName": "terraform-20221223023456046500000002",
+                                    "GroupId": "sg-07d1029fe6c947e91"
+                                }
+                            ],
+                            "Ipv6Addresses": [],
+                            "MacAddress": "06:5f:60:6f:82:cc",
+                            "NetworkInterfaceId": "eni-0346d61d8c59a5521",
+                            "OwnerId": "586127002594",
+                            "PrivateDnsName": "ip-10-0-178-175.us-east-2.compute.internal",
+                            "PrivateIpAddress": "10.0.178.175",
+                            "PrivateIpAddresses": [
+                                {
+                                    "Primary": true,
+                                    "PrivateDnsName": "ip-10-0-178-175.us-east-2.compute.internal",
+                                    "PrivateIpAddress": "10.0.178.175"
+                                }
+                            ],
+                            "SourceDestCheck": true,
+                            "Status": "in-use",
+                            "SubnetId": "subnet-0680db8a803b2a8e6",
+                            "VpcId": "vpc-06daaafa7431a1a7e",
+                            "InterfaceType": "interface"
+                        }
+                    ],
+                    "RootDeviceName": "/dev/xvda",
+                    "RootDeviceType": "ebs",
+                    "SecurityGroups": [
+                        {
+                            "GroupName": "terraform-20221223023456046500000002",
+                            "GroupId": "sg-07d1029fe6c947e91"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "StateReason": {
+                        "Code": "Client.UserInitiatedShutdown",
+                        "Message": "Client.UserInitiatedShutdown: User initiated shutdown"
+                    },
+                    "Tags": [
+                        {
+                            "Key": "Name",
+                            "Value": "ocp-m8cb9-worker-us-east-2b-pkn6z"
+                        },
+                        {
+                            "Key": "kubernetes.io/cluster/ocp-m8cb9",
+                            "Value": "owned"
+                        }
+                    ],
+                    "VirtualizationType": "hvm",
+                    "CpuOptions": {
+                        "CoreCount": 2,
+                        "ThreadsPerCore": 2
+                    },
+                    "CapacityReservationSpecification": {
+                        "CapacityReservationPreference": "open"
+                    },
+                    "HibernationOptions": {
+                        "Configured": false
+                    },
+                    "MetadataOptions": {
+                        "State": "applied",
+                        "HttpTokens": "optional",
+                        "HttpPutResponseHopLimit": 1,
+                        "HttpEndpoint": "enabled",
+                        "HttpProtocolIpv6": "disabled",
+                        "InstanceMetadataTags": "disabled"
+                    },
+                    "EnclaveOptions": {
+                        "Enabled": false
+                    },
+                    "PlatformDetails": "Linux/UNIX",
+                    "UsageOperation": "RunInstances",
+                    "UsageOperationUpdateTime": "2022-12-23T02:45:21+00:00",
+                    "PrivateDnsNameOptions": {
+                        "HostnameType": "ip-name",
+                        "EnableResourceNameDnsARecord": false,
+                        "EnableResourceNameDnsAAAARecord": false
+                    },
+                    "MaintenanceOptions": {
+                        "AutoRecovery": "default"
+                    }
+                }
+            ],
+            "OwnerId": "586127002594",
+            "ReservationId": "r-0c15d10816da219bd"
+        },
+        {
+            "Groups": [],
+            "Instances": [
+                {
+                    "AmiLaunchIndex": 0,
+                    "ImageId": "ami-0abf0ec5cdd856934",
+                    "InstanceId": "i-0ae8f7998cc65e668",
+                    "InstanceType": "m5.2xlarge",
+                    "LaunchTime": "2022-12-30T22:16:11+00:00",
+                    "Monitoring": {
+                        "State": "disabled"
+                    },
+                    "Placement": {
+                        "AvailabilityZone": "us-east-2c",
+                        "GroupName": "",
+                        "Tenancy": "default"
+                    },
+                    "PrivateDnsName": "ip-10-0-216-35.us-east-2.compute.internal",
+                    "PrivateIpAddress": "10.0.216.35",
+                    "ProductCodes": [],
+                    "PublicDnsName": "",
+                    "State": {
+                        "Code": 80,
+                        "Name": "stopped"
+                    },
+                    "StateTransitionReason": "User initiated (2023-01-01 12:52:11 GMT)",
+                    "SubnetId": "subnet-0db8592fb036f068d",
+                    "VpcId": "vpc-06daaafa7431a1a7e",
+                    "Architecture": "x86_64",
+                    "BlockDeviceMappings": [
+                        {
+                            "DeviceName": "/dev/xvda",
+                            "Ebs": {
+                                "AttachTime": "2022-12-23T02:35:09+00:00",
+                                "DeleteOnTermination": true,
+                                "Status": "attached",
+                                "VolumeId": "vol-0ddeb924a59f0f6c9"
+                            }
+                        }
+                    ],
+                    "ClientToken": "52A0AF00-1E12-4E3F-BF40-8207DFA064F1",
+                    "EbsOptimized": false,
+                    "EnaSupport": true,
+                    "Hypervisor": "xen",
+                    "IamInstanceProfile": {
+                        "Arn": "arn:aws:iam::586127002594:instance-profile/ocp-m8cb9-master-profile",
+                        "Id": "AIPAYQ57EJPRN236Q5C4Q"
+                    },
+                    "NetworkInterfaces": [
+                        {
+                            "Attachment": {
+                                "AttachTime": "2022-12-23T02:35:09+00:00",
+                                "AttachmentId": "eni-attach-022e5da7f6ac09b08",
+                                "DeleteOnTermination": false,
+                                "DeviceIndex": 0,
+                                "Status": "attached",
+                                "NetworkCardIndex": 0
+                            },
+                            "Description": "Created By OpenShift Installer",
+                            "Groups": [
+                                {
+                                    "GroupName": "terraform-20221223023456030600000001",
+                                    "GroupId": "sg-0a1f17b684793e4fa"
+                                }
+                            ],
+                            "Ipv6Addresses": [],
+                            "MacAddress": "0a:3d:8b:04:5f:8a",
+                            "NetworkInterfaceId": "eni-06b9b0ea61c2d7253",
+                            "OwnerId": "586127002594",
+                            "PrivateDnsName": "ip-10-0-216-35.us-east-2.compute.internal",
+                            "PrivateIpAddress": "10.0.216.35",
+                            "PrivateIpAddresses": [
+                                {
+                                    "Primary": true,
+                                    "PrivateDnsName": "ip-10-0-216-35.us-east-2.compute.internal",
+                                    "PrivateIpAddress": "10.0.216.35"
+                                }
+                            ],
+                            "SourceDestCheck": true,
+                            "Status": "in-use",
+                            "SubnetId": "subnet-0db8592fb036f068d",
+                            "VpcId": "vpc-06daaafa7431a1a7e",
+                            "InterfaceType": "interface"
+                        }
+                    ],
+                    "RootDeviceName": "/dev/xvda",
+                    "RootDeviceType": "ebs",
+                    "SecurityGroups": [
+                        {
+                            "GroupName": "terraform-20221223023456030600000001",
+                            "GroupId": "sg-0a1f17b684793e4fa"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "StateReason": {
+                        "Code": "Client.UserInitiatedShutdown",
+                        "Message": "Client.UserInitiatedShutdown: User initiated shutdown"
+                    },
+                    "Tags": [
+                        {
+                            "Key": "kubernetes.io/cluster/ocp-m8cb9",
+                            "Value": "owned"
+                        },
+                        {
+                            "Key": "Name",
+                            "Value": "ocp-m8cb9-master-2"
+                        }
+                    ],
+                    "VirtualizationType": "hvm",
+                    "CpuOptions": {
+                        "CoreCount": 4,
+                        "ThreadsPerCore": 2
+                    },
+                    "CapacityReservationSpecification": {
+                        "CapacityReservationPreference": "open"
+                    },
+                    "HibernationOptions": {
+                        "Configured": false
+                    },
+                    "MetadataOptions": {
+                        "State": "applied",
+                        "HttpTokens": "optional",
+                        "HttpPutResponseHopLimit": 1,
+                        "HttpEndpoint": "enabled",
+                        "HttpProtocolIpv6": "disabled",
+                        "InstanceMetadataTags": "disabled"
+                    },
+                    "EnclaveOptions": {
+                        "Enabled": false
+                    },
+                    "PlatformDetails": "Linux/UNIX",
+                    "UsageOperation": "RunInstances",
+                    "UsageOperationUpdateTime": "2022-12-23T02:35:09+00:00",
+                    "PrivateDnsNameOptions": {
+                        "HostnameType": "ip-name",
+                        "EnableResourceNameDnsARecord": false,
+                        "EnableResourceNameDnsAAAARecord": false
+                    },
+                    "MaintenanceOptions": {
+                        "AutoRecovery": "default"
+                    }
+                }
+            ],
+            "OwnerId": "586127002594",
+            "ReservationId": "r-0d73cb5d029b98d4d"
+        }
+    ]
+}

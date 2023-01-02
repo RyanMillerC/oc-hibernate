@@ -14,12 +14,38 @@ import sh
 from hibernate import helper
 
 
+def aws(*args, stream=False, **kwargs):
+    """Run `aws` external command. If stream is True, output of the command
+    will be streamed to stdout instead of returned. If stream is False, the
+    output from the command will be returned as a dictionary.
+
+    The command being called MUST return valid JSON if stream is False!
+
+    This function will handle errors.
+    """
+    if stream:
+        response = _external_cmd_stream_output(
+            'aws',
+            *args,
+            _tty_out=False, # AWS will return a pager unless _tty_out is False
+            **kwargs
+        )
+    else:
+        response = _external_cmd_json_output(
+            'aws',
+            *args,
+            _tty_out=False, # AWS will return a pager unless _tty_out is False
+            **kwargs
+        )
+    return response
+
+
 def oc(*args, stream=False, **kwargs):
     """Run `oc` external command. If stream is True, output of the command
     will be streamed to stdout instead of returned. If stream is False, the
     output from the command will be returned as a dictionary.
 
-    The command being called MUST return valid JSON if stream if False!
+    The command being called MUST return valid JSON if stream is False!
 
     This function will handle errors.
     """

@@ -65,24 +65,24 @@ def get_cluster_id():
     return cluster_id
 
 
-def get_availible_cluster_ids(aws_profile):
+def get_available_cluster_ids(aws_profile):
     """Get cluster IDs of clusters in AWS. Looks at prefix on EC2 instance
     names to determine cluster ID.
 
     :param str aws_profile:
         Profile name is passed to AWS CLI
-    """
 
+    :returns: List of clusters
+    :rtype list:
+    """
     # Get master-0 node of every cluster available in the AWS region
-    aws_cmd_output = sh.aws(
-        'ec2',
-        'describe-instances',
-        '--filter', f'Name=tag:Name,Values=*-master-0',
-        '--output', 'json',
-        '--profile', aws_profile,
-        _tty_out=False
+    aws_response = external.aws(
+        "ec2",
+        "describe-instances",
+        "--filter", f"Name=tag:Name,Values=*-master-0",
+        "--output", "json",
+        "--profile", aws_profile
     )
-    aws_response = json.loads(aws_cmd_output.stdout)
     ec2_instances = [
         reservation["Instances"][0] for reservation in aws_response["Reservations"]
     ]
@@ -100,15 +100,13 @@ def get_availible_cluster_ids(aws_profile):
 
     for cluster in clusters:
         # Get all machines for a given cluster
-        aws_cmd_output = sh.aws(
-            'ec2',
-            'describe-instances',
-            '--filter', f'Name=tag:Name,Values={cluster["cluster_id"]}-*',
-            '--output', 'json',
-            '--profile', aws_profile,
-            _tty_out=False
+        aws_response = external.aws(
+            "ec2",
+            "describe-instances",
+            "--filter", f'Name=tag:Name,Values={cluster["cluster_id"]}-*',
+            "--output", "json",
+            "--profile", aws_profile,
         )
-        aws_response = json.loads(aws_cmd_output.stdout)
         ec2_instances = [
             reservation["Instances"][0] for reservation in aws_response["Reservations"]
         ]
@@ -135,4 +133,5 @@ def get_availible_cluster_ids(aws_profile):
                 break
         cluster["state"] = cluster_state
 
+    # TODO: Return a Python type instead of this JSON-like mess
     return clusters

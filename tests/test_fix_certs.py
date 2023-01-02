@@ -13,7 +13,7 @@ from hibernate.__main__ import fix_certs
 def test_fix_certs(mocked):
     def mock_oc(*args, **kwargs):
         if args == ("get", "csr", "-o", "json"):
-            response = helper.load_json_file("./tests/mock_responses/oc_pending_csr.json")
+            response = helper.load_json_file("./tests/mock_responses/oc/oc_pending_csr.json")
         elif args == ("adm", "certificate", "approve", "csr-4t9vw", "csr-76sjh") \
             and kwargs == {'stream': True}:
             # oc prints directly to stdout. As long as this mock got proper input,

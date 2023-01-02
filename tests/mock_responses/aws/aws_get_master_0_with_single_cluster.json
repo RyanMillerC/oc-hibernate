@@ -1,0 +1,148 @@
+// Output from:
+// aws ec2 describe-instances --filter "Name=tag:Name,Values=*-master-0" --output json
+{
+    "Reservations": [
+        {
+            "Groups": [],
+            "Instances": [
+                {
+                    "AmiLaunchIndex": 0,
+                    "ImageId": "ami-0abf0ec5cdd856934",
+                    "InstanceId": "i-0b0026c402068877c",
+                    "InstanceType": "m5.2xlarge",
+                    "LaunchTime": "2022-12-30T22:16:10+00:00",
+                    "Monitoring": {
+                        "State": "disabled"
+                    },
+                    "Placement": {
+                        "AvailabilityZone": "us-east-2a",
+                        "GroupName": "",
+                        "Tenancy": "default"
+                    },
+                    "PrivateDnsName": "ip-10-0-133-93.us-east-2.compute.internal",
+                    "PrivateIpAddress": "10.0.133.93",
+                    "ProductCodes": [],
+                    "PublicDnsName": "",
+                    "State": {
+                        "Code": 16,
+                        "Name": "running"
+                    },
+                    "StateTransitionReason": "",
+                    "SubnetId": "subnet-039e21e67c411e4d5",
+                    "VpcId": "vpc-06daaafa7431a1a7e",
+                    "Architecture": "x86_64",
+                    "BlockDeviceMappings": [
+                        {
+                            "DeviceName": "/dev/xvda",
+                            "Ebs": {
+                                "AttachTime": "2022-12-23T02:35:09+00:00",
+                                "DeleteOnTermination": true,
+                                "Status": "attached",
+                                "VolumeId": "vol-0a708c9a82ef7d60e"
+                            }
+                        }
+                    ],
+                    "ClientToken": "D7D59ED4-B67F-4E6E-88DF-2721544F2693",
+                    "EbsOptimized": false,
+                    "EnaSupport": true,
+                    "Hypervisor": "xen",
+                    "IamInstanceProfile": {
+                        "Arn": "arn:aws:iam::586127002594:instance-profile/ocp-m8cb9-master-profile",
+                        "Id": "AIPAYQ57EJPRN236Q5C4Q"
+                    },
+                    "NetworkInterfaces": [
+                        {
+                            "Attachment": {
+                                "AttachTime": "2022-12-23T02:35:09+00:00",
+                                "AttachmentId": "eni-attach-035be6e50992d7bf3",
+                                "DeleteOnTermination": false,
+                                "DeviceIndex": 0,
+                                "Status": "attached",
+                                "NetworkCardIndex": 0
+                            },
+                            "Description": "Created By OpenShift Installer",
+                            "Groups": [
+                                {
+                                    "GroupName": "terraform-20221223023456030600000001",
+                                    "GroupId": "sg-0a1f17b684793e4fa"
+                                }
+                            ],
+                            "Ipv6Addresses": [],
+                            "MacAddress": "02:37:49:4a:82:8e",
+                            "NetworkInterfaceId": "eni-0745160fe77be37ba",
+                            "OwnerId": "586127002594",
+                            "PrivateDnsName": "ip-10-0-133-93.us-east-2.compute.internal",
+                            "PrivateIpAddress": "10.0.133.93",
+                            "PrivateIpAddresses": [
+                                {
+                                    "Primary": true,
+                                    "PrivateDnsName": "ip-10-0-133-93.us-east-2.compute.internal",
+                                    "PrivateIpAddress": "10.0.133.93"
+                                }
+                            ],
+                            "SourceDestCheck": true,
+                            "Status": "in-use",
+                            "SubnetId": "subnet-039e21e67c411e4d5",
+                            "VpcId": "vpc-06daaafa7431a1a7e",
+                            "InterfaceType": "interface"
+                        }
+                    ],
+                    "RootDeviceName": "/dev/xvda",
+                    "RootDeviceType": "ebs",
+                    "SecurityGroups": [
+                        {
+                            "GroupName": "terraform-20221223023456030600000001",
+                            "GroupId": "sg-0a1f17b684793e4fa"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "Tags": [
+                        {
+                            "Key": "Name",
+                            "Value": "ocp-m8cb9-master-0"
+                        },
+                        {
+                            "Key": "kubernetes.io/cluster/ocp-m8cb9",
+                            "Value": "owned"
+                        }
+                    ],
+                    "VirtualizationType": "hvm",
+                    "CpuOptions": {
+                        "CoreCount": 4,
+                        "ThreadsPerCore": 2
+                    },
+                    "CapacityReservationSpecification": {
+                        "CapacityReservationPreference": "open"
+                    },
+                    "HibernationOptions": {
+                        "Configured": false
+                    },
+                    "MetadataOptions": {
+                        "State": "applied",
+                        "HttpTokens": "optional",
+                        "HttpPutResponseHopLimit": 1,
+                        "HttpEndpoint": "enabled",
+                        "HttpProtocolIpv6": "disabled",
+                        "InstanceMetadataTags": "disabled"
+                    },
+                    "EnclaveOptions": {
+                        "Enabled": false
+                    },
+                    "PlatformDetails": "Linux/UNIX",
+                    "UsageOperation": "RunInstances",
+                    "UsageOperationUpdateTime": "2022-12-23T02:35:09+00:00",
+                    "PrivateDnsNameOptions": {
+                        "HostnameType": "ip-name",
+                        "EnableResourceNameDnsARecord": false,
+                        "EnableResourceNameDnsAAAARecord": false
+                    },
+                    "MaintenanceOptions": {
+                        "AutoRecovery": "default"
+                    }
+                }
+            ],
+            "OwnerId": "586127002594",
+            "ReservationId": "r-0a5ae3712212eb0c9"
+        }
+    ]
+}
