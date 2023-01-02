@@ -9,8 +9,8 @@ def test_openshift_cluster_init():
     assert len(cluster.machines) == 0
 
     machines = [
-        types.Machine('machine-1', 'running'),
-        types.Machine('machine-2', 'running')
+        types.Machine('machine-1', types.State.running),
+        types.Machine('machine-2', types.State.running)
     ]
     cluster_with_machines = types.OpenShiftCluster('my-other-cluster', machines)
     assert cluster_with_machines.name == 'my-other-cluster'
@@ -18,8 +18,8 @@ def test_openshift_cluster_init():
 
 
 def test_openshift_cluster_add_machine():
-    machine_1 = types.Machine('machine-1', 'running')
-    machine_2 = types.Machine('machine-2', 'running')
+    machine_1 = types.Machine('machine-1', types.State.running)
+    machine_2 = types.Machine('machine-2', types.State.running)
     cluster = types.OpenShiftCluster('my-cluster')
     cluster.add_machine(machine_1)
     cluster.add_machine(machine_2)
@@ -47,23 +47,36 @@ def test_openshift_cluster_state_no_machines():
 
 def test_openshift_cluster_single_state():
     cluster = types.OpenShiftCluster('my-cluster', [])
-    cluster.add_machine(types.Machine('machine-1', 'running'))
-    assert cluster.state == "running"
+    cluster.add_machine(types.Machine('machine-1', types.State.running))
+    assert cluster.state == "Running"
 
-    cluster.add_machine(types.Machine('machine-2', 'running'))
-    assert cluster.state == "running"
+    cluster.add_machine(types.Machine('machine-2', types.State.running))
+    assert cluster.state == "Running"
 
 
 def test_openshift_cluster_mixed_state():
     machines = [
-        types.Machine('machine-1', 'running'),
-        types.Machine('machine-2', 'stopped')
+        types.Machine('machine-1', types.State.running),
+        types.Machine('machine-2', types.State.stopped)
     ]
     cluster = types.OpenShiftCluster('my-cluster', machines)
-    assert cluster.state == "running, stopped"
+    assert cluster.state == "Running,Stopped"
 
 
 def test_machine_init():
-    machine = types.Machine('my-machine', 'running')
+    machine = types.Machine('my-machine', types.State.running)
     assert machine.name == 'my-machine'
-    assert machine.state == 'running'
+    assert machine.state == "Running"
+
+
+def test_machine_set_state():
+    """Ensure that setting State enum results in the correct proper name
+    returned as for Machine instance state property."""
+    machine = types.Machine('my-machine', types.State.running)
+    assert machine.state == "Running"
+    machine.set_state(types.State.stopped)
+    assert machine.state == "Stopped"
+    machine.set_state(types.State.terminated)
+    assert machine.state == "Terminated"
+    machine.set_state(types.State.unknown)
+    assert machine.state == "Unknown"

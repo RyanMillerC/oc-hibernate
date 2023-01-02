@@ -1,3 +1,5 @@
+from enum import Enum, auto
+
 
 class OpenShiftCluster():
     """Represents an OpenShift cluster."""
@@ -28,7 +30,7 @@ class OpenShiftCluster():
                 states.append(machine.state)
         # if len(states) == 1:
         #     return states[0]
-        return ", ".join(states)
+        return ",".join(states)
 
 
 class Machine():
@@ -36,9 +38,35 @@ class Machine():
 
     :param str name:
         Name of the machine
-    :param str state:
-        Machine state
+    :param hibernate.types.State state:
+        Machine state enum
     """
     def __init__(self, name, state):
         self.name = name
-        self.state = state
+        self._state = state
+
+    @property
+    def state(self):
+        if self._state == State.running:
+            return "Running"
+        elif self._state == State.stopped:
+            return "Stopped"
+        elif self._state == State.terminated:
+            return "Terminated"
+        elif self._state == State.unknown:
+            return "Unknown"
+        return "Unknown"
+
+    def set_state(self, new_state):
+        if isinstance(new_state, State):
+            self._state = new_state
+        else:
+            raise TypeError(f"Expected type State but received {type(new_state)}")
+
+
+class State(Enum):
+    """Represents the state of a machine on the cloud provider."""
+    running = auto()
+    stopped = auto()
+    terminated = auto()
+    unknown = auto()
