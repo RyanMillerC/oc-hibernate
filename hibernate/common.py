@@ -7,6 +7,7 @@ import sys
 import sh
 
 from hibernate import external, exceptions, helper
+from hibernate.types import Machine, OpenShiftCluster
 
 
 def get_aws_creds_from_ocp():
@@ -90,20 +91,20 @@ def get_available_cluster_ids(aws_profile):
     # Create list of clusters by taking prefix from instance name as cluster_id
     clusters = []
     for ec2_instance in ec2_instances:
-        name = "Unknown"
         for tag in ec2_instance["Tags"]:
             if tag['Key'] == "Name":
                 name = tag['Value']
-        # Split string and grab beginning of string up to master
+        # Split string and grab beginning of string up to master. That is the
+        # ID of the cluster (cluster-name + random-id)
         cluster_id = name.split('-master-')[0]
-        clusters.append({'cluster_id': cluster_id})
+        clusters.append(OpenShiftCluster(cluster_id))
 
     for cluster in clusters:
         # Get all machines for a given cluster
         aws_response = external.aws(
             "ec2",
             "describe-instances",
-            "--filter", f'Name=tag:Name,Values={cluster["cluster_id"]}-*',
+            "--filter", f'Name=tag:Name,Values={cluster.name}-*',
             "--output", "json",
             "--profile", aws_profile,
         )
@@ -112,26 +113,12 @@ def get_available_cluster_ids(aws_profile):
         ]
 
         # Get machine names and statuses
-        machines = []
         for ec2_instance in ec2_instances:
-            name = "Unknown"
             for tag in ec2_instance["Tags"]:
                 if tag['Key'] == "Name":
                     name = tag['Value']
             state = ec2_instance['State']['Name']
-            machines.append({
-                "name": name,
-                "state": state,
-            })
-        cluster['machines'] = machines
-
-        # Compare individual machine statuses to determine overall cluster status
-        cluster_state = machines[0]['state']
-        for machine in machines:
-            if machine['state'] != cluster_state:
-                cluster_state = "mixed"
-                break
-        cluster["state"] = cluster_state
+            cluster.add_machine(Machine(name, state))
 
     # TODO: Return a Python type instead of this JSON-like mess
     return clusters
