@@ -3,12 +3,11 @@ from enum import Enum, auto
 
 class OpenShiftCluster:
     """Represents an OpenShift cluster."""
-    def __init__(self, name, machines=None):
+    def __init__(self, name, machines=[]):
         self.name = name
-        if machines:
-            self.machines = machines
-        else:
-            self.machines = []
+        # If machines isn't copied, the passed list and self.machines will
+        # both point to the same list in memory.
+        self.machines = machines.copy()
 
     def add_machine(self, machine):
         """Add a machine to self.machines
