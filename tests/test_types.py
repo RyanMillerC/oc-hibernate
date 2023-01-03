@@ -37,10 +37,7 @@ def test_openshift_cluster_add_bad_machine():
 def test_openshift_cluster_state_no_machines():
     """OpenShiftCluster instance state property should be "Unknown" if
     instance contains 0 machines."""
-    # TODO: Check this out - If I don't explicitly set machines to an empty
-    # list, the cluster is created with two machines. It must not be getting
-    # cleared from a previous test.
-    cluster = types.OpenShiftCluster('my-cluster', [])
+    cluster = types.OpenShiftCluster('my-cluster')
     assert len(cluster.machines) == 0
     assert cluster.state == "Unknown"
 
