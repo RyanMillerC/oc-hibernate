@@ -1,11 +1,14 @@
 from enum import Enum, auto
 
 
-class OpenShiftCluster():
+class OpenShiftCluster:
     """Represents an OpenShift cluster."""
-    def __init__(self, name, machines=[]):
+    def __init__(self, name, machines=None):
         self.name = name
-        self.machines = machines
+        if machines:
+            self.machines = machines
+        else:
+            self.machines = []
 
     def add_machine(self, machine):
         """Add a machine to self.machines
@@ -33,7 +36,7 @@ class OpenShiftCluster():
         return ",".join(states)
 
 
-class Machine():
+class Machine:
     """Represents a machine in a cluster.
 
     :param str name:
