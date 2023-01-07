@@ -60,10 +60,12 @@ class Machine:
 
     @state.setter
     def state(self, new_state):
-        if isinstance(new_state, State):
+        if isinstance(new_state, str):
+            self._state = State.from_string(new_state)
+        elif isinstance(new_state, State):
             self._state = new_state
         else:
-            raise TypeError(f"Expected type State but received {type(new_state)}")
+            raise TypeError(f"Expected str or State but received {type(new_state)}")
 
 
 class State(Enum):
@@ -72,6 +74,13 @@ class State(Enum):
     stopped = auto()
     terminated = auto()
     unknown = auto()
+
+    @classmethod
+    def from_string(cls, str_state):
+        for state in State:
+            if str_state.lower() == str(state.name):
+                return State[state.name]
+        return State.unknown
 
     def __str__(self):
         """Print 'Example' instead of 'State.example'."""
