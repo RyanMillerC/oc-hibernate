@@ -43,7 +43,7 @@ def test_openshift_cluster_state_no_machines():
 
 
 def test_openshift_cluster_single_state():
-    cluster = types.OpenShiftCluster('my-cluster', [])
+    cluster = types.OpenShiftCluster('my-cluster')
     cluster.add_machine(types.Machine('machine-1', types.State.running))
     assert cluster.state == "Running"
 
@@ -63,17 +63,16 @@ def test_openshift_cluster_mixed_state():
 def test_machine_init():
     machine = types.Machine('my-machine', types.State.running)
     assert machine.name == 'my-machine'
-    assert machine.state == "Running"
+    assert machine.state == types.State.running
 
 
-def test_machine_set_state():
-    """Ensure that setting State enum results in the correct proper name
-    returned as for Machine instance state property."""
+def test_machine_set_state_after_init():
     machine = types.Machine('my-machine', types.State.running)
-    assert machine.state == "Running"
-    machine.set_state(types.State.stopped)
-    assert machine.state == "Stopped"
-    machine.set_state(types.State.terminated)
-    assert machine.state == "Terminated"
-    machine.set_state(types.State.unknown)
-    assert machine.state == "Unknown"
+    machine.state = types.State.stopped
+    assert machine.state == types.State.stopped
+
+
+def test_state_to_string():
+    """Used as a string, State.running should print "Running"."""
+    machine = types.Machine('my-machine', types.State.running)
+    assert str(machine.state) == "Running"
